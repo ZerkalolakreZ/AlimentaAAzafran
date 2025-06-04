@@ -1,11 +1,17 @@
 //VARIABLES INICIALES
 
 //MOLDES DE LA COMIDA Y GATITOS
-function Comida(tipoDeComida,x,y,velocidadCaida){
+function Comida(tipoDeComida,velocidadCaida,x,y){
     this.tipoComida=tipoDeComida; //puede ser buena o mala
+    this.velCaida=velocidadCaida; //empezara en 5
     this.posicionX=x;
     this.posicionY=y;
-    this.velCaida=velocidadCaida; //empezara en 5
+    
+    this.inicio = function(){
+       let aleatorio=Math.floor(Math.random()*750);
+       this.posicionX=aleatorio;
+       this.posicionY=(-500);
+    }
 }
 
 function Azafran(estado,x,y,vida){
@@ -41,7 +47,7 @@ function Azafran(estado,x,y,vida){
 }
 
 //OBJETOS: COMIDAS Y EL GATITO AZAFRAN
-let comidaPollo = new Comida("buena",23,23,5);
+let comidaPollo = new Comida("buena",5);
 let azafranGatito = new Azafran(true,414,-80,7);
 
 //ESCUCHADOR DE EVENTOS DE TECLADO
