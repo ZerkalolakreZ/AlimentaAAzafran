@@ -30,11 +30,14 @@ window.onload=function(){
 }
 
 //CLASES DE LA COMIDA Y GATITOS
-function Comida(tipoDeComida,velCaida,x,y){
+function Comida(tipoDeComida,x,y,ancho,alto,imagen){
     this.tipoComida=tipoDeComida; //puede ser buena o mala
-    this.velCaida=velCaida; //empezara en 5
     this.posicionX=x;
     this.posicionY=y;
+    this.ancho=ancho;
+    this.alto=alto;
+    this.imagen=imagen;
+    this.velCaida=velCaida; //empezara en 5
     
     this.inicio = function(){
        let aleatorio=Math.floor(Math.random()*750);
