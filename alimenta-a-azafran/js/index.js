@@ -1,4 +1,21 @@
 //VARIABLES INICIALES
+let canvas;
+let ctx;
+let vidas=7;
+let puntos=0;
+
+// CARGA DE CANVAS
+window.onload=function(){
+    canvas=document.getElementById("canvas");
+    ctx=canvas.getContext("2d");
+    canvas.style.backgroundImage="url(img/Casa.jpg)";
+    canvas.style.backgroundSize="cover";
+
+    ctx.font="20px Arial";
+    ctx.fillStyle="#000000";
+    ctx.fillText("Vidas: "+vidas,430,30);
+    ctx.fillText("Puntos: "+puntos,510,30);
+}
 
 //MOLDES DE LA COMIDA Y GATITOS
 function Comida(tipoDeComida,velocidadCaida,x,y){
