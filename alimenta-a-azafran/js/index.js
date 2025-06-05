@@ -4,6 +4,13 @@ let ctx;
 let vidas=7;
 let puntos=0;
 
+//OBJETO IMAGEN
+let imgAzafranUno=new Image();
+
+//OBJETOS: COMIDAS Y EL GATITO AZAFRAN
+let comidaPollo = new Comida("buena",5);
+let azafranGatito = new Azafran(425,300,100,100,imgAzafranUno);
+
 // CARGA DE CANVAS
 window.onload=function(){
     canvas=document.getElementById("canvas");
@@ -15,28 +22,35 @@ window.onload=function(){
     ctx.fillStyle="#000000";
     ctx.fillText("Vidas: "+vidas,430,30);
     ctx.fillText("Puntos: "+puntos,510,30);
+    
+    imgAzafranUno.src="img/Azafran.png";
+    imgAzafranUno.onload=function(){
+        azafranGatito.dibujar();
+    }
 }
 
-//MOLDES DE LA COMIDA Y GATITOS
-function Comida(tipoDeComida,velocidadCaida,x,y){
+//CLASES DE LA COMIDA Y GATITOS
+function Comida(tipoDeComida,velCaida,x,y){
     this.tipoComida=tipoDeComida; //puede ser buena o mala
-    this.velCaida=velocidadCaida; //empezara en 5
+    this.velCaida=velCaida; //empezara en 5
     this.posicionX=x;
     this.posicionY=y;
     
     this.inicio = function(){
        let aleatorio=Math.floor(Math.random()*750);
        this.posicionX=aleatorio;
-       this.posicionY=(-500);
+       this.posicionY=(0);
     }
 }
 
-function Azafran(estado,x,y,vida){
-    this.estado=estado; //true representa normal y false representa mareado
+function Azafran(x,y,ancho,alto,imagen){
     this.posX=x;
-    this.posY=y
-    this.vida=vida;
-
+    this.posY=y;
+    this.ancho=ancho;
+    this.alto=alto;
+    this.imagen=imagen;
+    this.estado=true; //true representa normal y false representa mareado
+    
     this.movIzq = function(){
         switch (this.estado){
             case true: //en caso de que su estado sea normal
@@ -61,29 +75,31 @@ function Azafran(estado,x,y,vida){
             break;
         }
     }
+    this.dibujar=function(){
+        ctx.drawImage(this.imagen,this.posX,this.posY,this.ancho,this.alto);
+    }
 }
-
-//OBJETOS: COMIDAS Y EL GATITO AZAFRAN
-let comidaPollo = new Comida("buena",5);
-let azafranGatito = new Azafran(true,414,-80,7);
 
 //ESCUCHADOR DE EVENTOS DE TECLADO
 document.addEventListener("keydown",function(e){
-    let azafran=document.getElementById("azafran");
-    azafran.style.position="relative";
     switch ((e.key).toLocaleLowerCase()){
         case "a":
             azafranGatito.movIzq();
-            azafran.style.left=azafranGatito.posX+"px";
         break;
         case "d":
             azafranGatito.movDer();
-            azafran.style.left=azafranGatito.posX+"px"
         break;
         case " ":
-            azafranGatito.estado= !azafranGatito.estado;
+            azafranGatito.estado=false;
+            setTimeout(function(){
+                azafranGatito.estado=true;
+            },7000);
         break;
     }
+    ctx.clearRect(0,0,850,400);
+    azafranGatito.dibujar();
+    ctx.fillText("Vidas: "+vidas,430,30);
+    ctx.fillText("Puntos: "+puntos,510,30);
 });
 
 
