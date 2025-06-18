@@ -20,26 +20,26 @@ let comidaCatnip = new Comida("catnip",0,0,100,100, imgComidaCatnip)
 window.onload=function(){
     canvas=document.getElementById("canvas");
     ctx=canvas.getContext("2d");
-    canvas.style.backgroundImage="url(img/Casa.jpg)";
+    canvas.style.backgroundImage="url(img/casa.jpg)";
     canvas.style.backgroundSize="cover";
     // DIBUJAR OBJETOS
     // 1. Azafran
-    imgAzafranUno.src="img/Azafran.png";
+    imgAzafranUno.src="img/azafran.png";
     imgAzafranUno.onload=function(){
         azafranGatito.dibujar();
     }
     // 2. Pollo
-    imgComidaPizza.src="img/Pollo.png";
+    imgComidaPizza.src="img/pollo.png";
     imgComidaPollo.onload=function(){
         comidaPollo.dibujar();
     }
     // 3. Pizza
-    imgComidaPizza.src="img/Pizza.png";
+    imgComidaPizza.src="img/pizza.png";
     imgComidaPizza.onload=function(){
         comidaPizza.dibujar();
     }
     // 4. Catnip
-    imgComidaCatnip.src="img/Sobre.png";
+    imgComidaCatnip.src="img/sobre.png";
     imgComidaCatnip.onload=function(){
         comidaCatnip.dibujar();
     }
