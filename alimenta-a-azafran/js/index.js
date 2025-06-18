@@ -3,6 +3,7 @@ let canvas;
 let ctx;
 let vidas=7;
 let puntos=0;
+let gameOver=false;
 
 //VARIABLES imgES
 let imgAzafranUno=new Image();
@@ -11,17 +12,19 @@ let imgComidaPizza=new Image();
 let imgComidaCatnip=new Image();
 
 //OBJETOS: COMIDAS Y EL GATITO AZAFRAN
-let comidaPollo = new Comida("buena",0,0,100,100, imgComidaPollo);
-let azafranGatito = new Azafran(425,300,100,100,imgAzafranUno);
-let comidaPizza = new Comida("mala",0,0,100,100, imgComidaPizza);
-let comidaCatnip = new Comida("catnip",0,0,100,100, imgComidaCatnip)
+let azafranGatito = new Azafran(imgAzafranUno,425,300,100,100, false);
+let comidaPollo = new Comida(imgComidaPollo,0,0,50,50,"buena");
+comidaPollo.sortear();
+let comidaPizza = new Comida(imgComidaPizza,0,0,50,50,"mala");
+comidaPizza.sortear();
+let comidaCatnip = new Comida(imgComidaCatnip,0,0,50,50,"catnip");
+comidaCatnip.sortear();
 
 // CARGA DE CANVAS
 window.onload=function(){
     canvas=document.getElementById("canvas");
     ctx=canvas.getContext("2d");
     canvas.style.backgroundImage="url(img/Casa.jpg)";
-    canvas.style.backgroundSize="cover";
     // DIBUJAR OBJETOS
     // 1. Azafran
     imgAzafranUno.src="img/Azafran.png";
@@ -29,7 +32,7 @@ window.onload=function(){
         azafranGatito.dibujar();
     }
     // 2. Pollo
-    imgComidaPizza.src="img/Pollo.png";
+    imgComidaPollo.src="img/Pollo.png";
     imgComidaPollo.onload=function(){
         comidaPollo.dibujar();
     }
@@ -57,12 +60,14 @@ window.onload=function(){
            redibujarTodo();
         }else{
         // GAME OVER
-        ctx.clearRect(0,0,800,600);
-        ctx.font="80 px Impact";
-        ctx.fillText("GAME OVER",350,300);
+        ctx.clearRect(0,0,850,400);
+        ctx.font="80px Impact";
+        ctx.fillStyle= "red";
+        ctx.textAlign="center";
+        ctx.fillText("GAME OVER",425,200);
         // puntaje
-        ctx.font="30 px Impact";
-        ctx.fillText("Puntos: "+puntos,340,300);   
+        ctx.font="30px Impact";
+        ctx.fillText("Puntos: "+puntos,425,250);   
         }
     },1000/24);
 }
@@ -76,53 +81,53 @@ function dibujarTextos(){
 //FUNCIONES Y ATRIBUTOS
 
 // 1. AZAFRAN
-function Azafran(x,y,ancho,alto,img){
-    this.posX=x;
-    this.posY=y;
+function Azafran(img,x,y,ancho,alto,catnip){
+    this.img=img;
+    this.x=x;
+    this.y=y;
     this.ancho=ancho;
     this.alto=alto;
-    this.img=img;
-    this.catnip=false; //true representa mareado y false representa normal
-    
+    this.catnip=catnip
+
     this.dibujar=function(){
-        ctx.drawImage(this.img,this.posX,this.posY,this.ancho,this.alto);
+        ctx.drawImage(this.img,this.x,this.y,this.ancho,this.alto);
     }
     this.movIzq = function(){
         switch (this.catnip){
             case false: //en caso de que su estado sea normal
-                this.posX-=5;
-                console.log(this.posX);
+                this.x-=5;
+                console.log(this.x);
             break;
             case true: //en caso de que haya comido catnip
-                this.posX+=5;
-                console.log(this.posX);
+                this.x+=5;
+                console.log(this.x);
             break;
         }
     }
     this.movDer = function(){
         switch (this.catnip){
             case false: //en caso de que su estado sea normal
-                this.posX+=5;
-                console.log(this.posX);
+                this.x+=5;
+                console.log(this.x);
             break;
             case true: //en caso de que haya comido catnip
-                this.posX-=5;
-                console.log(this.posX);
+                this.x-=5;
+                console.log(this.x);
             break;
         }
     }
 }
 // 2. COMIDA
-function Comida(tipo,x,y,ancho,alto,img){
-    this.tipo=tipo; //puede ser buena, mala o catnip
+function Comida(img,x,y,ancho,alto,tipo){
+    this.img=img;
     this.x=x;
     this.y=y;
     this.ancho=ancho;
     this.alto=alto;
-    this.img=img;
+    this.tipo=tipo; //puede ser buena, mala o catnip
     
     this.dibujar=function(){
-        ctx.drawImage(this.tipo,this.x,this.y,this.ancho,this.alto,this.img);
+        ctx.drawImage(this.img,this.x,this.y,this.ancho,this.alto);
     }
     // Caida
     this.caer=function(){
@@ -139,24 +144,26 @@ function Comida(tipo,x,y,ancho,alto,img){
     }
     // Colision
     this.colision=function(){
-        if(
-              (this.x>azafranGatito.x+this.ancho)
-            &&(this.x<azafranGatito.x-azafranGatito.ancho)
-            &&(this.y>azafranGatito.y+this.alto)
-            &&(this.y<azafranGatito.y-azafranGatito.alto)
-        ){
-          switch(tipo){
-            case "comidaBuena":
-                puntos=+10;
-            break;
-            case "comidaMala":
+        if(this.y+this.alto>=azafranGatito.y &&
+           this.y<=azafranGatito.y+azafranGatito.alto &&
+           this.x+this.ancho>=azafranGatito.x &&
+           this.x <=azafranGatito.x+azafranGatito.ancho) 
+        {
+          switch(this.tipo){
+            case "buena":
+                puntos+=10;
+                break;
+            case "mala":
                 vidas--;
-            break;
+                break;
             case "catnip":
-                catnip=true;
-            break;
+                azafranGatito.catnip=true;
+                setTimeout(() => {
+                    azafranGatito.catnip=false;
+                }, 5000);
+                break;
             } 
-        this.sortear();
+            this.sortear();
         }
     }
 }
@@ -180,6 +187,8 @@ function redibujarTodo(){
     comidaPizza.dibujar();
     comidaPollo.dibujar();
     comidaCatnip.dibujar();
+    ctx.font="20px Impact";
+    ctx.fillStyle="black";
     ctx.fillText("Vidas: "+vidas,430,30);
     ctx.fillText("Puntos: "+puntos,510,30);
 }
