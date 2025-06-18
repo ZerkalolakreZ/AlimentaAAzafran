@@ -24,7 +24,7 @@ comidaCatnip.sortear();
 window.onload=function(){
     canvas=document.getElementById("canvas");
     ctx=canvas.getContext("2d");
-    canvas.style.backgroundImage="url(img/Casa.jpg)";
+    canvas.style.backgroundImage="url(img/casa.jpg)";
     // DIBUJAR OBJETOS
     // 1. Azafran
     imgAzafranUno.src="img/azafran.png";
@@ -32,7 +32,7 @@ window.onload=function(){
         azafranGatito.dibujar();
     }
     // 2. Pollo
-    imgComidaPollo.src="img/Pollo.png";
+    imgComidaPollo.src="img/pollo.png";
     imgComidaPollo.onload=function(){
         comidaPollo.dibujar();
     }
