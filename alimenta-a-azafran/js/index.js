@@ -27,7 +27,7 @@ window.onload=function(){
     canvas.style.backgroundImage="url(img/Casa.jpg)";
     // DIBUJAR OBJETOS
     // 1. Azafran
-    imgAzafranUno.src="img/Azafran.png";
+    imgAzafranUno.src="img/azafran.png";
     imgAzafranUno.onload=function(){
         azafranGatito.dibujar();
     }
@@ -37,12 +37,12 @@ window.onload=function(){
         comidaPollo.dibujar();
     }
     // 3. Pizza
-    imgComidaPizza.src="img/Pizza.png";
+    imgComidaPizza.src="img/pizza.png";
     imgComidaPizza.onload=function(){
         comidaPizza.dibujar();
     }
     // 4. Catnip
-    imgComidaCatnip.src="img/Sobre.png";
+    imgComidaCatnip.src="img/sobre.png";
     imgComidaCatnip.onload=function(){
         comidaCatnip.dibujar();
     }
