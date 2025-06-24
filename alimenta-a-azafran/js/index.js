@@ -13,7 +13,7 @@ let imgComidaCatnip=new Image();
 
 //OBJETOS: COMIDAS Y EL GATITO AZAFRAN
 let azafranGatito = new Azafran(imgAzafranUno,425,300,100,100, false);
-let comidaPollo = new Comida(imgComidaPollo,0,0,50,50,"buena");
+let comidaPollo = new Comida(imgComidaPollo,0,0,33,60,"buena");
 comidaPollo.sortear();
 let comidaPizza = new Comida(imgComidaPizza,0,0,50,50,"mala");
 comidaPizza.sortear();
