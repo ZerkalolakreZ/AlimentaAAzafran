@@ -8,20 +8,42 @@ let gameOver=false;
 //VARIABLES imgES
 let imgAzafranUno=new Image();
 let imgAzafranComidaMala=new Image();
+let imgAzafranEnfermo=new Image();
 let imgAzafranFeliz=new Image();
 
+let imgComidaCatnip=new Image();
+let imgComidaCarne=new Image();
+let imgComidaChocolate=new Image();
+let imgComidaHelado=new Image();
+let imgComidaPez=new Image();
 let imgComidaPollo=new Image();
 let imgComidaPizza=new Image();
-let imgComidaCatnip=new Image();
+let imgBolaDePelo=new Image();
+
+
+// VARIABLES SONIDOS
+let audioPuntos
+let audioVidas
+let audioPerdida
 
 //OBJETOS: COMIDAS Y EL GATITO AZAFRAN
 let azafranGatito = new Azafran(imgAzafranUno,425,300,100,100, false);
-let comidaPollo = new Comida(imgComidaPollo,0,0,33,60,"buena");
+let comidaCarne = new Comida(imgComidaCarne,0,0,53,80,"buena");
+comidaCarne.sortear();
+let comidaChocolate = new Comida(imgComidaChocolate,0,0,70,70,"mala");
+comidaChocolate.sortear();
+let comidaHelado = new Comida(imgComidaHelado,0,0,70,70,"mala");
+comidaHelado.sortear();
+let comidaPez = new Comida(imgComidaPez,0,0,53,80,"buena");
+comidaPez.sortear();
+let comidaPollo = new Comida(imgComidaPollo,0,0,53,80,"buena");
 comidaPollo.sortear();
-let comidaPizza = new Comida(imgComidaPizza,0,0,50,50,"mala");
+let comidaPizza = new Comida(imgComidaPizza,0,0,70,70,"mala");
 comidaPizza.sortear();
-let comidaCatnip = new Comida(imgComidaCatnip,0,0,50,50,"catnip");
+let comidaCatnip = new Comida(imgComidaCatnip,0,0,70,70,"catnip");
 comidaCatnip.sortear();
+let bolaDePelo = new Comida(imgBolaDePelo,0,0,70,70,"mala");
+bolaDePelo.sortear();
 
 // CARGA DE CANVAS
 window.onload=function(){
@@ -34,43 +56,93 @@ window.onload=function(){
     imgAzafranUno.onload=function(){
         azafranGatito.dibujar();
     }
-    // 1b. Azafran comida mala
+    // 1b. Azafran Comida Mala
     imgAzafranComidaMala.src="img/azafran-comida-mala.png";
     imgAzafranComidaMala.onload=function(){
         azafranGatito.dibujar();
     }
-    // 1c. Azafran feliz
+    // 1c. Azafran Enfermo
+    imgAzafranEnfermo.src="img/azafran-enfermo.png";
+    imgAzafranEnfermo.onload=function(){
+        azafranGatito.dibujar();
+    }
+    // 1d. Azafran Feliz
     imgAzafranFeliz.src="img/azafran-feliz.png";
     imgAzafranFeliz.onload=function(){
         azafranGatito.dibujar();
     }
-    // 2. Pollo
-    imgComidaPollo.src="img/pollo.png";
-    imgComidaPollo.onload=function(){
-        comidaPollo.dibujar();
+    // 2. Carne
+    imgComidaCarne.src="img/carne.png";
+    imgComidaCarne.onload=function(){
+        comidaCarne.dibujar();
     }
-    // 3. Pizza
+    // 3. Chocolate
+    imgComidaChocolate.src="img/chocolate.png";
+    imgComidaChocolate.onload=function(){
+        comidaChocolate.dibujar();
+    }
+    // 4. Helado
+    imgComidaHelado.src="img/helado.png";
+    imgComidaHelado.onload=function(){
+        comidaHelado.dibujar();
+    }
+    // 5. Pez
+    imgComidaPez.src="img/pez.png";
+    imgComidaPez.onload=function(){
+        comidaPez.dibujar();
+    }
+    // 6. Pizza 
     imgComidaPizza.src="img/pizza.png";
     imgComidaPizza.onload=function(){
         comidaPizza.dibujar();
     }
-    // 4. Catnip
-    imgComidaCatnip.src="img/sobre.png";
+    // 7. Pollo
+    imgComidaPollo.src="img/pollo.png";
+    imgComidaPollo.onload=function(){
+        comidaPollo.dibujar();
+    }
+    // 8. Catnip
+    imgComidaCatnip.src="img/hierba.png";
     imgComidaCatnip.onload=function(){
         comidaCatnip.dibujar();
     }
+    // 9. Bola de Pelo
+    imgBolaDePelo.src="img/bola-de-pelo.png";
+    imgBolaDePelo.onload=function(){
+        bolaDePelo.dibujar();
+    }
+    //Audios
+    audioPuntos= new Audio();
+    audioPuntos.src="audios/comida-buena.mp3";
+
+    audioPerdida= new Audio();
+    audioPerdida.src="audios/perder.mp3";
+
+    audioVidas= new Audio();
+    audioVidas.src="audios/comida-mala.mp3";
+
     // DEFINIR INTERVALO
     setInterval(function(){
         if(vidas>0){
-           comidaPizza.caer();
-           comidaPollo.caer();
-           comidaCatnip.caer();
-           
-           comidaPizza.colision();
-           comidaPollo.colision();
-           comidaCatnip.colision();
-
-           redibujarTodo();
+        comidaCarne.caer();
+        comidaChocolate.caer();
+        comidaHelado.caer();
+        comidaPez.caer();
+        comidaPizza.caer();
+        comidaPollo.caer();
+        comidaCatnip.caer();
+        bolaDePelo.caer();
+        
+        comidaCarne.colision();
+        comidaChocolate.colision();
+        comidaHelado.colision();
+        comidaPez.colision();
+        comidaPizza.colision();
+        comidaPollo.colision();
+        comidaCatnip.colision();
+        bolaDePelo.colision();
+        
+        redibujarTodo();
         }else{
         // GAME OVER
         ctx.clearRect(0,0,850,400);
@@ -145,7 +217,7 @@ function Comida(img,x,y,ancho,alto,tipo){
     // Caida
     this.caer=function(){
         if(this.y<600){
-           this.y+=5 
+        this.y+=5 
         }else{
             this.sortear();
         }
@@ -158,13 +230,14 @@ function Comida(img,x,y,ancho,alto,tipo){
     // Colision
     this.colision=function(){
         if(this.y+this.alto>=azafranGatito.y &&
-           this.y<=azafranGatito.y+azafranGatito.alto &&
-           this.x+this.ancho>=azafranGatito.x &&
-           this.x <=azafranGatito.x+azafranGatito.ancho) 
+        this.y<=azafranGatito.y+azafranGatito.alto &&
+        this.x+this.ancho>=azafranGatito.x &&
+        this.x <=azafranGatito.x+azafranGatito.ancho) 
         {
-          switch(this.tipo){
+        switch(this.tipo){
             case "buena":
                 puntos+=10;
+                audioPuntos.play();
                 azafranGatito.img=imgAzafranFeliz;
                 setTimeout(() => {
                     azafranGatito.img=imgAzafranUno;
@@ -172,9 +245,10 @@ function Comida(img,x,y,ancho,alto,tipo){
                 break;
             case "mala":
                 vidas--;
+                audioVidas.play();
                 azafranGatito.img=imgAzafranComidaMala;
                 setTimeout(() => {
-                   azafranGatito.img=imgAzafranUno;   
+                    azafranGatito.img=imgAzafranUno;   
                 },1500);
                 break;
             case "catnip":
@@ -204,14 +278,19 @@ document.addEventListener("keydown",function(e){
 // REDIBUJAR TODO
 function redibujarTodo(){
     ctx.clearRect(0,0,850,400);
+    ctx.font="20px Impact";
+    ctx.fillStyle="black";
+    ctx.fillText("Vidas: "+vidas,130,30);
+    ctx.fillText("Puntos: "+puntos,210,30);
     azafranGatito.dibujar();
+    comidaCarne.dibujar();
+    comidaChocolate.dibujar();
+    comidaHelado.dibujar();
+    comidaPez.dibujar();
     comidaPizza.dibujar();
     comidaPollo.dibujar();
     comidaCatnip.dibujar();
-    ctx.font="20px Impact";
-    ctx.fillStyle="black";
-    ctx.fillText("Vidas: "+vidas,430,30);
-    ctx.fillText("Puntos: "+puntos,510,30);
+    bolaDePelo.dibujar();
 }
 
 function iniciarJuego(){
