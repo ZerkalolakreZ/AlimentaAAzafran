@@ -4,6 +4,7 @@ let ctx;
 let vidas=7;
 let puntos=0;
 let gameOver=false;
+let acelerar=0;
 
 //VARIABLES imgES
 let imgAzafranUno=new Image();
@@ -141,7 +142,20 @@ window.onload=function(){
         comidaPollo.colision();
         comidaCatnip.colision();
         bolaDePelo.colision();
-        
+
+        //PREGUNTA CONSTANTEMENTE SI LLEGO A 100 PUNTOS, CUANDO LLEGA ACELARA 1 EN VELOCIDAD
+        if(acelerar>=100){
+            comidaCarne.velCaida+=1;
+            comidaCatnip.velCaida+=1;
+            comidaChocolate.velCaida+=1;
+            comidaHelado.velCaida+=1;
+            comidaPez.velCaida+=1;
+            comidaPizza.velCaida+=1;
+            comidaPollo.velCaida+=1;
+            bolaDePelo.velCaida+=1;
+            acelerar=0;
+        }
+            
         redibujarTodo();
         }else{
         // GAME OVER
@@ -210,6 +224,7 @@ function Comida(img,x,y,ancho,alto,tipo){
     this.ancho=ancho;
     this.alto=alto;
     this.tipo=tipo; //puede ser buena, mala o catnip
+    this.velCaida=5;
     
     this.dibujar=function(){
         ctx.drawImage(this.img,this.x,this.y,this.ancho,this.alto);
@@ -217,7 +232,7 @@ function Comida(img,x,y,ancho,alto,tipo){
     // Caida
     this.caer=function(){
         if(this.y<600){
-        this.y+=5 
+        this.y+=this.velCaida;
         }else{
             this.sortear();
         }
@@ -237,6 +252,7 @@ function Comida(img,x,y,ancho,alto,tipo){
         switch(this.tipo){
             case "buena":
                 puntos+=10;
+                acelerar+=10;
                 audioPuntos.play();
                 azafranGatito.img=imgAzafranFeliz;
                 setTimeout(() => {
