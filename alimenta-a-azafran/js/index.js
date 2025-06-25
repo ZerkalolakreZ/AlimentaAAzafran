@@ -229,10 +229,10 @@ function Comida(img,x,y,ancho,alto,tipo){
     }
     // Colision
     this.colision=function(){
-        if(this.y+this.alto>=azafranGatito.y &&
-        this.y<=azafranGatito.y+azafranGatito.alto &&
-        this.x+this.ancho>=azafranGatito.x &&
-        this.x <=azafranGatito.x+azafranGatito.ancho) 
+        if(this.y+this.alto>=(azafranGatito.y+15) &&
+        this.y<=(azafranGatito.y+azafranGatito.alto-12) &&
+        this.x+this.ancho>=(azafranGatito.x+26) &&
+        this.x<=(azafranGatito.x+azafranGatito.ancho-26)) 
         {
         switch(this.tipo){
             case "buena":
