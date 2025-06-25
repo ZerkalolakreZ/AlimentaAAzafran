@@ -27,22 +27,22 @@ let audioVidas
 let audioPerdida
 
 //OBJETOS: COMIDAS Y EL GATITO AZAFRAN
-let azafranGatito = new Azafran(imgAzafranUno,425,300,100,100, false);
-let comidaCarne = new Comida(imgComidaCarne,0,0,53,80,"buena");
+let azafranGatito = new Azafran(imgAzafranUno,425,307,100,100, false);
+let comidaCarne = new Comida(imgComidaCarne,0,0,53,43,"buena");
 comidaCarne.sortear();
-let comidaChocolate = new Comida(imgComidaChocolate,0,0,70,70,"mala");
+let comidaChocolate = new Comida(imgComidaChocolate,0,0,46,60,"mala");
 comidaChocolate.sortear();
-let comidaHelado = new Comida(imgComidaHelado,0,0,70,70,"mala");
+let comidaHelado = new Comida(imgComidaHelado,0,0,32,60,"mala");
 comidaHelado.sortear();
-let comidaPez = new Comida(imgComidaPez,0,0,53,80,"buena");
+let comidaPez = new Comida(imgComidaPez,0,0,70,49,"buena");
 comidaPez.sortear();
-let comidaPollo = new Comida(imgComidaPollo,0,0,53,80,"buena");
+let comidaPollo = new Comida(imgComidaPollo,0,0,52,50,"buena");
 comidaPollo.sortear();
-let comidaPizza = new Comida(imgComidaPizza,0,0,70,70,"mala");
+let comidaPizza = new Comida(imgComidaPizza,0,0,59,68,"mala");
 comidaPizza.sortear();
-let comidaCatnip = new Comida(imgComidaCatnip,0,0,70,70,"catnip");
+let comidaCatnip = new Comida(imgComidaCatnip,0,0,30,30,"catnip");
 comidaCatnip.sortear();
-let bolaDePelo = new Comida(imgBolaDePelo,0,0,70,70,"mala");
+let bolaDePelo = new Comida(imgBolaDePelo,0,0,30,30,"mala");
 bolaDePelo.sortear();
 
 // CARGA DE CANVAS
