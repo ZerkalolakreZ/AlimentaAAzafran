@@ -7,6 +7,8 @@ let gameOver=false;
 
 //VARIABLES imgES
 let imgAzafranUno=new Image();
+let imgAzafranComidaMala=new Image();
+
 let imgComidaPollo=new Image();
 let imgComidaPizza=new Image();
 let imgComidaCatnip=new Image();
@@ -29,6 +31,11 @@ window.onload=function(){
     // 1. Azafran
     imgAzafranUno.src="img/azafran.png";
     imgAzafranUno.onload=function(){
+        azafranGatito.dibujar();
+    }
+    // 1b. Azafran comida mala
+    imgAzafranComidaMala.src="img/azafran-comida-mala.png";
+    imgAzafranComidaMala.onload=function(){
         azafranGatito.dibujar();
     }
     // 2. Pollo
@@ -155,6 +162,10 @@ function Comida(img,x,y,ancho,alto,tipo){
                 break;
             case "mala":
                 vidas--;
+                azafranGatito.img=imgAzafranComidaMala;
+                setTimeout(() => {
+                   azafranGatito.img=imgAzafranUno;   
+                },1500);
                 break;
             case "catnip":
                 azafranGatito.catnip=true;
