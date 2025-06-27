@@ -320,6 +320,17 @@ function redibujarTodo(){
     comidaPollo.dibujar();
     comidaCatnip.dibujar();
     bolaDePelo.dibujar();
+    dibujarVida(); //esto es de la variable vida
+}
+
+//DIBUJA LOS CORAZONES VACIOS Y LLENOS
+function dibujarVida(){
+    for(j=0;j<=6;j++){
+        ctx.drawImage(imgVidaVacia,600+(30*j),15,30,30);
+    };
+    for(i=0;i<=vidas-1;i++){
+        ctx.drawImage(imgVidaLlena,600+(30*i),15,30,30);
+    };
 }
 
 function iniciarJuego(){
