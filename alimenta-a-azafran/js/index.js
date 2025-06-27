@@ -21,6 +21,9 @@ let imgComidaPollo=new Image();
 let imgComidaPizza=new Image();
 let imgBolaDePelo=new Image();
 
+let imgVidaLlena=new Image();
+let imgVidaVacia=new Image();
+
 
 // VARIABLES SONIDOS
 let audioPuntos
@@ -111,6 +114,16 @@ window.onload=function(){
     imgBolaDePelo.src="img/bola-de-pelo.png";
     imgBolaDePelo.onload=function(){
         bolaDePelo.dibujar();
+    }
+    //10. Vida Vacia
+    imgVidaVacia.src="img/corazon-vacio.png";
+    imgVidaVacia.onload=function(){
+        dibujarVida();
+    }
+    //11. Vida Llena
+    imgVidaLlena.src="img/corazon-lleno.png"
+    imgVidaLlena.onload=function(){
+        dibujarVida();
     }
     //Audios
     audioPuntos= new Audio();
