@@ -5,6 +5,7 @@ let vidas=7;
 let puntos=0;
 let gameOver=false;
 let acelerar=0;
+let nivel=0;
 
 //VARIABLES imgES
 let imgAzafranUno=new Image();
@@ -24,6 +25,10 @@ let imgBolaDePelo=new Image();
 let imgVidaLlena=new Image();
 let imgVidaVacia=new Image();
 
+let imgBotonJugar=new Image();
+let imgBotonPersonaje=new Image();
+let imgBotonInstrucciones=new Image();
+let imgBotonReintentar=new Image();
 
 // VARIABLES SONIDOS
 let audioPuntos
@@ -49,6 +54,12 @@ comidaCatnip.sortear();
 let bolaDePelo = new Comida(imgBolaDePelo,0,0,30,30,"mala");
 bolaDePelo.sortear();
 
+//OBJETOS BOTONES
+let botonJugar=new Boton(imgBotonJugar,373,120,120,90);
+let botonPersonaje=new Boton(imgBotonPersonaje,343,210,180,70);
+let botonInstrucciones=new Boton(imgBotonInstrucciones,333,280,200,60);
+let botonReintentar=new Boton(imgBotonReintentar,333,260,176,70)
+
 // CARGA DE CANVAS
 window.onload=function(){
     canvas=document.getElementById("canvas");
@@ -60,21 +71,9 @@ window.onload=function(){
     imgAzafranUno.onload=function(){
         azafranGatito.dibujar();
     }
-    // 1b. Azafran Comida Mala
-    imgAzafranComidaMala.src="img/azafran-comida-mala.png";
-    imgAzafranComidaMala.onload=function(){
-        azafranGatito.dibujar();
-    }
-    // 1c. Azafran Enfermo
-    imgAzafranEnfermo.src="img/azafran-enfermo.png";
-    imgAzafranEnfermo.onload=function(){
-        azafranGatito.dibujar();
-    }
-    // 1d. Azafran Feliz
-    imgAzafranFeliz.src="img/azafran-feliz.png";
-    imgAzafranFeliz.onload=function(){
-        azafranGatito.dibujar();
-    }
+    imgAzafranComidaMala.src="img/azafran-comida-mala.png";// 1b. Azafran Comida Mala
+    imgAzafranEnfermo.src="img/azafran-enfermo.png";// 1c. Azafran Enfermo
+    imgAzafranFeliz.src="img/azafran-feliz.png";// 1d. Azafran Feliz
     // 2. Carne
     imgComidaCarne.src="img/carne.png";
     imgComidaCarne.onload=function(){
@@ -121,10 +120,28 @@ window.onload=function(){
         dibujarVida();
     }
     //11. Vida Llena
-    imgVidaLlena.src="img/corazon-lleno.png"
+    imgVidaLlena.src="img/corazon-lleno.png";
     imgVidaLlena.onload=function(){
         dibujarVida();
     }
+    //12. Boton Jugar
+    imgBotonJugar.src="img/boton-jugar.png";
+    imgBotonJugar.onload=function(){
+        botonJugar.dibujarBoton();
+    }
+    //13. Boton Personaje
+    imgBotonPersonaje.src="img/boton-personaje.png";
+    imgBotonPersonaje.onload=function(){
+        botonPersonaje.dibujarBoton();
+    }
+    //14. Boton Instrucciones
+    imgBotonInstrucciones.src="img/boton-instrucciones.png";
+    imgBotonInstrucciones.onload=function(){
+        botonInstrucciones.dibujarBoton();
+    }
+    //15. Boton Reintentar
+    imgBotonReintentar.src="img/boton-reintentar.png";
+
     //Audios
     audioPuntos= new Audio();
     audioPuntos.src="audios/comida-buena.mp3";
@@ -137,57 +154,60 @@ window.onload=function(){
 
     // DEFINIR INTERVALO
     setInterval(function(){
-        if(vidas>0){
-        comidaCarne.caer();
-        comidaChocolate.caer();
-        comidaHelado.caer();
-        comidaPez.caer();
-        comidaPizza.caer();
-        comidaPollo.caer();
-        comidaCatnip.caer();
-        bolaDePelo.caer();
-        
-        comidaCarne.colision();
-        comidaChocolate.colision();
-        comidaHelado.colision();
-        comidaPez.colision();
-        comidaPizza.colision();
-        comidaPollo.colision();
-        comidaCatnip.colision();
-        bolaDePelo.colision();
+        if(nivel==0){
+            //MENU INICIO
+            ctx.font="40px Consolas"
+            ctx.fillText("ALIMENTÁ A ZAFRÁN",250,100);
+            botonJugar.dibujarBoton();
+            botonPersonaje.dibujarBoton();
+            botonInstrucciones.dibujarBoton();
 
-        //PREGUNTA CONSTANTEMENTE SI LLEGO A 100 PUNTOS, CUANDO LLEGA ACELARA 1 EN VELOCIDAD
-        if(acelerar>=100){
-            comidaCarne.velCaida+=1;
-            comidaCatnip.velCaida+=1;
-            comidaChocolate.velCaida+=1;
-            comidaHelado.velCaida+=1;
-            comidaPez.velCaida+=1;
-            comidaPizza.velCaida+=1;
-            comidaPollo.velCaida+=1;
-            bolaDePelo.velCaida+=1;
-            acelerar=0;
-        }
-            
-        redibujarTodo();
+        }else if(nivel==1 & vidas>0){
+            comidaCarne.caer();
+            comidaChocolate.caer();
+            comidaHelado.caer();
+            comidaPez.caer();
+            comidaPizza.caer();
+            comidaPollo.caer();
+            comidaCatnip.caer();
+            bolaDePelo.caer();
+        
+            comidaCarne.colision();
+            comidaChocolate.colision();
+            comidaHelado.colision();
+            comidaPez.colision();
+            comidaPizza.colision();
+            comidaPollo.colision();
+            comidaCatnip.colision();
+            bolaDePelo.colision();
+
+            redibujarTodo();
+
+            //PREGUNTA CONSTANTEMENTE SI LLEGO A 100 PUNTOS, CUANDO LLEGA ACELARA 1 EN VELOCIDAD
+            if(acelerar>=100){
+                comidaCarne.velCaida+=1;
+                comidaCatnip.velCaida+=1;
+                comidaChocolate.velCaida+=1;
+                comidaHelado.velCaida+=1;
+                comidaPez.velCaida+=1;
+                comidaPizza.velCaida+=1;
+                comidaPollo.velCaida+=1;
+                bolaDePelo.velCaida+=1;
+                acelerar=0;
+            }
         }else{
-        // GAME OVER
-        ctx.clearRect(0,0,850,400);
-        ctx.font="80px Impact";
-        ctx.fillStyle= "red";
-        ctx.textAlign="center";
-        ctx.fillText("GAME OVER",425,200);
-        // puntaje
-        ctx.font="30px Impact";
-        ctx.fillText("Puntos: "+puntos,425,250);   
+            // GAME OVER
+            ctx.clearRect(0,0,850,400);
+            ctx.font="80px Impact";
+            ctx.fillStyle= "red";
+            ctx.textAlign="center";
+            ctx.fillText("GAME OVER",425,200);
+            // puntaje
+            ctx.font="30px Impact";
+            ctx.fillText("Puntos: "+puntos,425,250);
+            botonReintentar.dibujarBoton();
         }
     },1000/24);
-}
-function dibujarTextos(){
-    ctx.font="20px Arial";
-    ctx.fillStyle="#000000";
-    ctx.fillText("Vidas: "+vidas,430,30);
-    ctx.fillText("Puntos: "+puntos,510,30);
 }
 
 //FUNCIONES Y ATRIBUTOS
@@ -205,27 +225,17 @@ function Azafran(img,x,y,ancho,alto,catnip){
         ctx.drawImage(this.img,this.x,this.y,this.ancho,this.alto);
     }
     this.movIzq = function(){
-        switch (this.catnip){
-            case false: //en caso de que su estado sea normal
-                this.x-=5;
-                console.log(this.x);
-            break;
-            case true: //en caso de que haya comido catnip
-                this.x+=5;
-                console.log(this.x);
-            break;
+        if(this.catnip==false & this.x>=-25){//en caso de que su estado sea normal
+            this.x-=5;
+        }else if(this.catnip==true & this.x<=775){//en caso de que haya comido catnip
+            this.x+=5;
         }
     }
     this.movDer = function(){
-        switch (this.catnip){
-            case false: //en caso de que su estado sea normal
-                this.x+=5;
-                console.log(this.x);
-            break;
-            case true: //en caso de que haya comido catnip
-                this.x-=5;
-                console.log(this.x);
-            break;
+        if(this.catnip==false & this.x<=775){//en caso de que su estado sea normal
+            this.x+=5;
+        }else if(this.catnip==true & this.x>=-25){//en caso de que haya comido catnip
+            this.x-=5;
         }
     }
 }
@@ -291,6 +301,18 @@ function Comida(img,x,y,ancho,alto,tipo){
         }
     }
 }
+// 3. BOTON
+function Boton(img,x,y,ancho,alto){
+    this.img=img;
+    this.x=x;
+    this.y=y;
+    this.ancho=ancho;
+    this.alto=alto;
+
+    this.dibujarBoton=function(){
+        ctx.drawImage(this.img,this.x,this.y,this.ancho,this.alto);
+    }
+}
 
 //ESCUCHADOR DE EVENTOS DE TECLADO
 document.addEventListener("keydown",function(e){
@@ -303,6 +325,40 @@ document.addEventListener("keydown",function(e){
         break;
     }
 })
+
+//ESCUCHADOR DE EVENTOS DE MOUSE
+document.addEventListener("click",function(e){
+    //X e Y ya no dependen de la posicion del canvas en la pagina
+    let rect=canvas.getBoundingClientRect();
+    let x=e.clientX-rect.left;
+    let y=e.clientY-rect.top;
+    
+    if(nivel==0){ 
+        //BOTON JUGAR
+        if(x>botonJugar.x & 
+        x<botonJugar.x+botonJugar.ancho & 
+        y>botonJugar.y & 
+        y<botonJugar.y+botonJugar.alto){
+            nivel=1;
+        }
+    }else if(vidas==0){
+        if(x>botonReintentar.x & 
+        x<botonReintentar.x+botonReintentar.ancho & 
+        y>botonReintentar.y & 
+        y<botonReintentar.y+botonReintentar.alto){
+            vidas=7;
+            puntos=0;
+        }
+    }
+});
+
+//DIBUJA LOS TEXTOS
+function dibujarTextos(){
+    ctx.font="20px Arial";
+    ctx.fillStyle="#000000";
+    ctx.fillText("Vidas: "+vidas,430,30);
+    ctx.fillText("Puntos: "+puntos,510,30);
+}
 
 // REDIBUJAR TODO
 function redibujarTodo(){
@@ -325,14 +381,13 @@ function redibujarTodo(){
 
 //DIBUJA LOS CORAZONES VACIOS Y LLENOS
 function dibujarVida(){
-    for(j=0;j<=6;j++){
-        ctx.drawImage(imgVidaVacia,600+(30*j),15,30,30);
-    };
-    for(i=0;i<=vidas-1;i++){
-        ctx.drawImage(imgVidaLlena,600+(30*i),15,30,30);
-    };
+    if(nivel==1){
+        for(j=0;j<=6;j++){
+            ctx.drawImage(imgVidaVacia,600+(30*j),15,30,30);
+        };
+        for(i=0;i<=vidas-1;i++){
+            ctx.drawImage(imgVidaLlena,600+(30*i),15,30,30);
+        };
+    }
 }
 
-function iniciarJuego(){
-    console.log("Hiciste click");
-}
