@@ -60,8 +60,8 @@ bolaDePelo.sortear();
 let botonJugar=new Boton(imgBotonJugar,373,120,120,90);
 let botonPersonaje=new Boton(imgBotonPersonaje,343,210,180,70);
 let botonInstrucciones=new Boton(imgBotonInstrucciones,333,280,200,60);
-let botonReintentar=new Boton(imgBotonReintentar,333,260,176,70);
-let botonMenu=new Boton(imgBotonMenu,380,320,103,70);
+let botonReintentar=new Boton(imgBotonReintentar,260,300,176,70);
+let botonMenu=new Boton(imgBotonMenu,460,300,103,70);
 
 // CARGA DE CANVAS
 window.onload=function(){
