@@ -226,16 +226,16 @@ function Azafran(img,x,y,ancho,alto,catnip){
     }
     this.movIzq = function(){
         if(this.catnip==false & this.x>=-25){//en caso de que su estado sea normal
-            this.x-=5;
+            this.x-=7;
         }else if(this.catnip==true & this.x<=775){//en caso de que haya comido catnip
-            this.x+=5;
+            this.x+=3;
         }
     }
     this.movDer = function(){
         if(this.catnip==false & this.x<=775){//en caso de que su estado sea normal
-            this.x+=5;
+            this.x+=7;
         }else if(this.catnip==true & this.x>=-25){//en caso de que haya comido catnip
-            this.x-=5;
+            this.x-=3;
         }
     }
 }
@@ -272,30 +272,38 @@ function Comida(img,x,y,ancho,alto,tipo){
         this.x+this.ancho>=(azafranGatito.x+26) &&
         this.x<=(azafranGatito.x+azafranGatito.ancho-26)) 
         {
-        switch(this.tipo){
-            case "buena":
-                puntos+=10;
-                acelerar+=10;
-                audioPuntos.play();
-                azafranGatito.img=imgAzafranFeliz;
-                setTimeout(() => {
-                    azafranGatito.img=imgAzafranUno;
-                },1500);
-                break;
-            case "mala":
-                vidas--;
-                audioVidas.play();
-                azafranGatito.img=imgAzafranComidaMala;
-                setTimeout(() => {
-                    azafranGatito.img=imgAzafranUno;   
-                },1500);
-                break;
-            case "catnip":
-                azafranGatito.catnip=true;
-                setTimeout(() => {
-                    azafranGatito.catnip=false;
-                }, 5000);
-                break;
+            switch(this.tipo){
+                case "buena":
+                    puntos+=10;
+                    acelerar+=10;
+                    audioPuntos.play();
+                    if(azafranGatito.catnip==false){
+                        azafranGatito.img=imgAzafranFeliz;
+                        setTimeout(() => {
+                        azafranGatito.img=imgAzafranUno;
+                        },1500);
+                    }
+                    break;
+                case "mala":
+                    vidas--;
+                    audioVidas.play();
+                    if(azafranGatito.catnip==false){
+                        azafranGatito.img=imgAzafranComidaMala;
+                        setTimeout(() => {
+                        azafranGatito.img=imgAzafranUno;   
+                        },1500);
+                    };
+                    break;
+                case "catnip":
+                    azafranGatito.catnip=true;
+                    setTimeout(() => {
+                        azafranGatito.catnip=false;
+                    }, 5000);
+                    azafranGatito.img=imgAzafranEnfermo;
+                    setTimeout(()=> {
+                        azafranGatito.img=imgAzafranUno;
+                    },5000);
+                    break;
             } 
             this.sortear();
         }
