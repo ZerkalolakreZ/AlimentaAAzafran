@@ -6,6 +6,7 @@ let puntos=0;
 let gameOver=false;
 let acelerar=0;
 let nivel=0;
+let fuente;
 
 //VARIABLES imgES
 let imgAzafranUno=new Image();
@@ -153,13 +154,18 @@ window.onload=function(){
     audioVidas.src="audios/comida-mala.mp3";
     audioVidas.volume=0.5;
 
+    //Fonts
+    fuente= new FontFace("minecraft","url(fonts/Minecraft.ttf)");
+    document.fonts.add(fuente);
+    fuente.load();
+
     // DEFINIR INTERVALO
     setInterval(function(){
         if(nivel==0){
             //MENU INICIO
             canvas.style.backgroundImage="url(img/fondo-menu.png)";
-            ctx.font="40px Consolas"
-            ctx.fillText("ALIMENTÁ A ZAFRÁN",250,100);
+            ctx.font="40px minecraft"
+            ctx.fillText("ALIMENTA A ZAFRAN",220,100);
             botonJugar.dibujarBoton();
             botonPersonaje.dibujarBoton();
             botonInstrucciones.dibujarBoton();
