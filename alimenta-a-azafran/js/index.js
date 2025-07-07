@@ -64,7 +64,7 @@ let botonReintentar=new Boton(imgBotonReintentar,333,260,176,70)
 window.onload=function(){
     canvas=document.getElementById("canvas");
     ctx=canvas.getContext("2d");
-    canvas.style.backgroundImage="url(img/casa.jpg)";
+    
     // DIBUJAR OBJETOS
     // 1. Azafran
     imgAzafranUno.src="img/azafran.png";
@@ -151,18 +151,21 @@ window.onload=function(){
 
     audioVidas= new Audio();
     audioVidas.src="audios/comida-mala.mp3";
+    audioVidas.volume=0.5;
 
     // DEFINIR INTERVALO
     setInterval(function(){
         if(nivel==0){
             //MENU INICIO
+            canvas.style.backgroundImage="url(img/fondo-menu.png)";
             ctx.font="40px Consolas"
             ctx.fillText("ALIMENTÁ A ZAFRÁN",250,100);
             botonJugar.dibujarBoton();
             botonPersonaje.dibujarBoton();
             botonInstrucciones.dibujarBoton();
 
-        }else if(nivel==1 & vidas>0){
+        }else if(nivel==1 && vidas>0){
+            canvas.style.backgroundImage="url(img/casa.jpg)";
             comidaCarne.caer();
             comidaChocolate.caer();
             comidaHelado.caer();
@@ -225,16 +228,16 @@ function Azafran(img,x,y,ancho,alto,catnip){
         ctx.drawImage(this.img,this.x,this.y,this.ancho,this.alto);
     }
     this.movIzq = function(){
-        if(this.catnip==false & this.x>=-25){//en caso de que su estado sea normal
+        if(this.catnip==false && this.x>=-25){//en caso de que su estado sea normal
             this.x-=7;
-        }else if(this.catnip==true & this.x<=775){//en caso de que haya comido catnip
+        }else if(this.catnip==true && this.x<=775){//en caso de que haya comido catnip
             this.x+=3;
         }
     }
     this.movDer = function(){
-        if(this.catnip==false & this.x<=775){//en caso de que su estado sea normal
+        if(this.catnip==false && this.x<=775){//en caso de que su estado sea normal
             this.x+=7;
-        }else if(this.catnip==true & this.x>=-25){//en caso de que haya comido catnip
+        }else if(this.catnip==true && this.x>=-25){//en caso de que haya comido catnip
             this.x-=3;
         }
     }
