@@ -30,6 +30,7 @@ let imgBotonJugar=new Image();
 let imgBotonPersonaje=new Image();
 let imgBotonInstrucciones=new Image();
 let imgBotonReintentar=new Image();
+let imgBotonMenu=new Image();
 
 // VARIABLES SONIDOS
 let audioPuntos
@@ -59,7 +60,8 @@ bolaDePelo.sortear();
 let botonJugar=new Boton(imgBotonJugar,373,120,120,90);
 let botonPersonaje=new Boton(imgBotonPersonaje,343,210,180,70);
 let botonInstrucciones=new Boton(imgBotonInstrucciones,333,280,200,60);
-let botonReintentar=new Boton(imgBotonReintentar,333,260,176,70)
+let botonReintentar=new Boton(imgBotonReintentar,333,260,176,70);
+let botonMenu=new Boton(imgBotonMenu,380,320,103,70);
 
 // CARGA DE CANVAS
 window.onload=function(){
@@ -142,6 +144,7 @@ window.onload=function(){
     }
     //15. Boton Reintentar
     imgBotonReintentar.src="img/boton-reintentar.png";
+    imgBotonMenu.src="img/boton-menu.png";
 
     //Audios
     audioPuntos= new Audio();
@@ -163,14 +166,17 @@ window.onload=function(){
     setInterval(function(){
         if(nivel==0){
             //MENU INICIO
+            ctx.clearRect(0,0,850,400);
             canvas.style.backgroundImage="url(img/fondo-menu.png)";
-            ctx.font="40px minecraft"
-            ctx.fillText("ALIMENTA A ZAFRAN",220,100);
+            ctx.fillStyle="black";
+            ctx.font="40px minecraft";
+            ctx.fillText("ALIMENTA A AZAFRAN",220,100);
             botonJugar.dibujarBoton();
             botonPersonaje.dibujarBoton();
             botonInstrucciones.dibujarBoton();
 
         }else if(nivel==1 && vidas>0){
+            ctx.clearRect(0,0,850,400);
             canvas.style.backgroundImage="url(img/casa.jpg)";
             comidaCarne.caer();
             comidaChocolate.caer();
@@ -204,8 +210,13 @@ window.onload=function(){
                 bolaDePelo.velCaida+=1;
                 acelerar=0;
             }
+        }else if(nivel==2){
+            //PERSONAJES
+            ctx.clearRect(0,0,850,400);
+            canvas.style.backgroundImage="url(img/fondo-menu.png)";
         }else{
             // GAME OVER
+            canvas.style.backgroundImage="url(img/fondo-menu.png)";
             ctx.clearRect(0,0,850,400);
             ctx.font="80px Impact";
             ctx.fillStyle= "red";
@@ -215,6 +226,7 @@ window.onload=function(){
             ctx.font="30px Impact";
             ctx.fillText("Puntos: "+puntos,425,250);
             botonReintentar.dibujarBoton();
+            botonMenu.dibujarBoton();
         }
     },1000/24);
 }
@@ -357,14 +369,24 @@ document.addEventListener("click",function(e){
         y>botonJugar.y & 
         y<botonJugar.y+botonJugar.alto){
             nivel=1;
+        }else if(x>botonPersonaje.x & 
+        x<botonPersonaje.x+botonPersonaje.ancho & 
+        y>botonPersonaje.y & 
+        y<botonPersonaje.y+botonPersonaje.alto){
+            nivel=2;
         }
     }else if(vidas==0){
         if(x>botonReintentar.x & 
         x<botonReintentar.x+botonReintentar.ancho & 
         y>botonReintentar.y & 
         y<botonReintentar.y+botonReintentar.alto){
-            vidas=7;
-            puntos=0;
+            inicioJuego();
+        }else if(x>botonMenu.x & 
+        x<botonMenu.x+botonMenu.ancho & 
+        y>botonMenu.y & 
+        y<botonMenu.y+botonMenu.alto){
+            nivel=0;
+            inicioJuego();
         }
     }
 });
@@ -406,5 +428,32 @@ function dibujarVida(){
             ctx.drawImage(imgVidaLlena,600+(30*i),15,30,30);
         };
     }
+}
+
+function inicioJuego(){
+    vidas=7;
+    puntos=0;
+
+    azafranGatito.x=425;
+    azafranGatito.y=307;
+    azafranGatito.catnip=false;
+
+    acelerar=0;
+    comidaCarne.sortear();
+    comidaCarne.velCaida=5;
+    comidaCatnip.sortear();
+    comidaCatnip.velCaida=5;
+    comidaChocolate.sortear();
+    comidaChocolate.velCaida=5;
+    comidaHelado.sortear();
+    comidaHelado.velCaida=5;
+    comidaPez.sortear();
+    comidaPez.velCaida=5;
+    comidaPizza.sortear();
+    comidaPizza.velCaida=5;
+    comidaPollo.sortear();
+    comidaPollo.velCaida=5;
+    bolaDePelo.sortear();
+    bolaDePelo.velCaida=5;
 }
 
