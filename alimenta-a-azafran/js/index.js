@@ -9,11 +9,31 @@ let nivel=0;
 let fuente;
 
 //VARIABLES imgES
+//Imagenes Azafran 1
 let imgAzafranUno=new Image();
 let imgAzafranComidaMala=new Image();
 let imgAzafranEnfermo=new Image();
 let imgAzafranFeliz=new Image();
 
+//Imagenes Azafran 2
+let imgAzafranDos=new Image();
+let imgAzafranDosComidaMala=new Image();
+let imgAzafranDosEnfermo=new Image();
+let imgAzafranDosFeliz=new Image();
+
+//Imagenes Azafran 3
+let imgAzafranTres=new Image();
+let imgAzafranTresComidaMala=new Image();
+let imgAzafranTresEnfermo=new Image();
+let imgAzafranTresFeliz=new Image();
+
+//Imagenes Azafran 4
+let imgAzafranCuatro=new Image();
+let imgAzafranCuatroComidaMala=new Image();
+let imgAzafranCuatroEnfermo=new Image();
+let imgAzafranCuatroFeliz=new Image();
+
+//Imagenes Comida
 let imgComidaCatnip=new Image();
 let imgComidaCarne=new Image();
 let imgComidaChocolate=new Image();
@@ -23,9 +43,11 @@ let imgComidaPollo=new Image();
 let imgComidaPizza=new Image();
 let imgBolaDePelo=new Image();
 
+//Imagenes Vida
 let imgVidaLlena=new Image();
 let imgVidaVacia=new Image();
 
+//Imagenes Botones
 let imgBotonJugar=new Image();
 let imgBotonPersonaje=new Image();
 let imgBotonInstrucciones=new Image();
@@ -37,8 +59,10 @@ let audioPuntos
 let audioVidas
 let audioPerdida
 
-//OBJETOS: COMIDAS Y EL GATITO AZAFRAN
+//OBJETOS: GATITO AZAFRAN
 let azafranGatito = new Azafran(imgAzafranUno,425,307,100,100, false);
+
+//OBJETOS: COMIDAS
 let comidaCarne = new Comida(imgComidaCarne,0,0,53,43,"buena");
 comidaCarne.sortear();
 let comidaChocolate = new Comida(imgComidaChocolate,0,0,46,60,"mala");
@@ -56,7 +80,7 @@ comidaCatnip.sortear();
 let bolaDePelo = new Comida(imgBolaDePelo,0,0,30,30,"mala");
 bolaDePelo.sortear();
 
-//OBJETOS BOTONES
+//OBJETOS: BOTONES
 let botonJugar=new Boton(imgBotonJugar,373,120,120,90);
 let botonPersonaje=new Boton(imgBotonPersonaje,343,210,180,70);
 let botonInstrucciones=new Boton(imgBotonInstrucciones,333,280,200,60);
@@ -363,25 +387,24 @@ document.addEventListener("click",function(e){
     let y=e.clientY-rect.top;
     
     if(nivel==0){ 
-        //BOTON JUGAR
-        if(x>botonJugar.x & 
+        if(x>botonJugar.x & //BOTON JUGAR
         x<botonJugar.x+botonJugar.ancho & 
         y>botonJugar.y & 
         y<botonJugar.y+botonJugar.alto){
             nivel=1;
-        }else if(x>botonPersonaje.x & 
+        }else if(x>botonPersonaje.x & //BOTON PERSONAJE
         x<botonPersonaje.x+botonPersonaje.ancho & 
         y>botonPersonaje.y & 
         y<botonPersonaje.y+botonPersonaje.alto){
             nivel=2;
         }
     }else if(vidas==0){
-        if(x>botonReintentar.x & 
+        if(x>botonReintentar.x & //BOTON REINTENTAR
         x<botonReintentar.x+botonReintentar.ancho & 
         y>botonReintentar.y & 
         y<botonReintentar.y+botonReintentar.alto){
             inicioJuego();
-        }else if(x>botonMenu.x & 
+        }else if(x>botonMenu.x & //BOTON MENU
         x<botonMenu.x+botonMenu.ancho & 
         y>botonMenu.y & 
         y<botonMenu.y+botonMenu.alto){
@@ -402,10 +425,9 @@ function dibujarTextos(){
 // REDIBUJAR TODO
 function redibujarTodo(){
     ctx.clearRect(0,0,850,400);
-    ctx.font="20px Impact";
+    ctx.font="20px minecraft";
     ctx.fillStyle="black";
-    ctx.fillText("Vidas: "+vidas,130,30);
-    ctx.fillText("Puntos: "+puntos,210,30);
+    ctx.fillText("Puntos: "+puntos,130,30);
     azafranGatito.dibujar();
     comidaCarne.dibujar();
     comidaChocolate.dibujar();
