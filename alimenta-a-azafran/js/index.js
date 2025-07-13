@@ -81,11 +81,11 @@ let bolaDePelo = new Comida(imgBolaDePelo,0,0,30,30,"mala");
 bolaDePelo.sortear();
 
 //OBJETOS: BOTONES
-let botonJugar=new Boton(imgBotonJugar,373,120,120,90);
-let botonPersonaje=new Boton(imgBotonPersonaje,343,210,180,70);
-let botonInstrucciones=new Boton(imgBotonInstrucciones,333,280,200,60);
-let botonReintentar=new Boton(imgBotonReintentar,260,300,176,70);
-let botonMenu=new Boton(imgBotonMenu,460,300,103,70);
+let botonJugar=new Boton(imgBotonJugar,280,120,300,70);
+let botonPersonaje=new Boton(imgBotonPersonaje,280,200,300,70);
+let botonInstrucciones=new Boton(imgBotonInstrucciones,280,280,300,70);
+let botonReintentar=new Boton(imgBotonReintentar,100,300,300,70);
+let botonMenu=new Boton(imgBotonMenu,460,300,300,70);
 
 // CARGA DE CANVAS
 window.onload=function(){
@@ -157,7 +157,7 @@ window.onload=function(){
         botonJugar.dibujarBoton();
     }
     //13. Boton Personaje
-    imgBotonPersonaje.src="img/boton-personaje.png";
+    imgBotonPersonaje.src="img/boton-menu.png";
     imgBotonPersonaje.onload=function(){
         botonPersonaje.dibujarBoton();
     }
@@ -169,7 +169,7 @@ window.onload=function(){
     //15. Boton Reintentar
     imgBotonReintentar.src="img/boton-reintentar.png";
     imgBotonMenu.src="img/boton-menu.png";
-
+    
     //Audios
     audioPuntos= new Audio();
     audioPuntos.src="audios/comida-buena.mp3";
@@ -191,17 +191,14 @@ window.onload=function(){
         if(nivel==0){
             //MENU INICIO
             ctx.clearRect(0,0,850,400);
-            canvas.style.backgroundImage="url(img/fondo-menu.png)";
-            ctx.fillStyle="black";
-            ctx.font="40px minecraft";
-            ctx.fillText("ALIMENTA A AZAFRAN",220,100);
+            canvas.style.backgroundImage="url(img/menu.jpg)";
             botonJugar.dibujarBoton();
             botonPersonaje.dibujarBoton();
             botonInstrucciones.dibujarBoton();
 
         }else if(nivel==1 && vidas>0){
             ctx.clearRect(0,0,850,400);
-            canvas.style.backgroundImage="url(img/casa.jpg)";
+            canvas.style.backgroundImage="url(img/casa.png)";
             comidaCarne.caer();
             comidaChocolate.caer();
             comidaHelado.caer();
@@ -237,18 +234,16 @@ window.onload=function(){
         }else if(nivel==2){
             //PERSONAJES
             ctx.clearRect(0,0,850,400);
-            canvas.style.backgroundImage="url(img/fondo-menu.png)";
+            canvas.style.backgroundImage="url(img/menu-gatitos.jpg)";
         }else{
             // GAME OVER
-            canvas.style.backgroundImage="url(img/fondo-menu.png)";
+            canvas.style.backgroundImage="url(img/game-over.jpg)";
             ctx.clearRect(0,0,850,400);
-            ctx.font="80px Impact";
-            ctx.fillStyle= "red";
-            ctx.textAlign="center";
-            ctx.fillText("GAME OVER",425,200);
             // puntaje
-            ctx.font="30px Impact";
-            ctx.fillText("Puntos: "+puntos,425,250);
+            ctx.font="30px minecraft";
+            ctx.fillStyle= "white";
+            ctx.fillText("Puntos: "+puntos,650,50);
+            audioPerdida.play();
             botonReintentar.dibujarBoton();
             botonMenu.dibujarBoton();
         }
@@ -343,11 +338,11 @@ function Comida(img,x,y,ancho,alto,tipo){
                     azafranGatito.catnip=true;
                     setTimeout(() => {
                         azafranGatito.catnip=false;
-                    }, 5000);
+                    }, 15000);
                     azafranGatito.img=imgAzafranEnfermo;
                     setTimeout(()=> {
                         azafranGatito.img=imgAzafranUno;
-                    },5000);
+                    }, 15000);
                     break;
             } 
             this.sortear();
@@ -416,7 +411,7 @@ document.addEventListener("click",function(e){
 
 //DIBUJA LOS TEXTOS
 function dibujarTextos(){
-    ctx.font="20px Arial";
+    ctx.font="20px minecraft";
     ctx.fillStyle="#000000";
     ctx.fillText("Vidas: "+vidas,430,30);
     ctx.fillText("Puntos: "+puntos,510,30);
