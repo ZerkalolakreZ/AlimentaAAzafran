@@ -7,6 +7,7 @@ let gameOver=false;
 let acelerar=0;
 let nivel=0;
 let fuente;
+let personajeSeleccionado=1; // 1=Azafran1, 2=Azafran2, 3=Azafran3, 4=Azafran4
 
 //VARIABLES imgES
 //Imagenes Azafran 1
@@ -87,86 +88,111 @@ let botonInstrucciones=new Boton(imgBotonInstrucciones,333,280,200,60);
 let botonReintentar=new Boton(imgBotonReintentar,260,300,176,70);
 let botonMenu=new Boton(imgBotonMenu,460,300,103,70);
 
+//OBJETOS: BOTONES PERSONAJES
+let botonAzafran1=new Boton(imgAzafranUno,200,150,100,100);
+let botonAzafran2=new Boton(imgAzafranDos,350,150,100,100);
+let botonAzafran3=new Boton(imgAzafranTres,500,150,100,100);
+let botonAzafran4=new Boton(imgAzafranCuatro,650,150,100,100);
+
 // CARGA DE CANVAS
 window.onload=function(){
     canvas=document.getElementById("canvas");
     ctx=canvas.getContext("2d");
     
     // DIBUJAR OBJETOS
-    // 1. Azafran
+    // 1. Azafran 1
     imgAzafranUno.src="img/azafran.png";
     imgAzafranUno.onload=function(){
         azafranGatito.dibujar();
     }
-    imgAzafranComidaMala.src="img/azafran-comida-mala.png";// 1b. Azafran Comida Mala
-    imgAzafranEnfermo.src="img/azafran-enfermo.png";// 1c. Azafran Enfermo
-    imgAzafranFeliz.src="img/azafran-feliz.png";// 1d. Azafran Feliz
-    // 2. Carne
+    imgAzafranComidaMala.src="img/azafran-comida-mala.png";
+    imgAzafranEnfermo.src="img/azafran-enfermo.png";
+    imgAzafranFeliz.src="img/azafran-feliz.png";
+    
+    // 2. Azafran 2
+    imgAzafranDos.src="img/azafran-dos.png";
+    imgAzafranDosComidaMala.src="img/azafran-dos-comida-mala.png";
+    imgAzafranDosEnfermo.src="img/azafran-dos-enfermo.png";
+    imgAzafranDosFeliz.src="img/azafran-dos-feliz.png";
+    
+    // 3. Azafran 3
+    imgAzafranTres.src="img/azafran-tres.png";
+    imgAzafranTresComidaMala.src="img/azafran-tres-comida-mala.png";
+    imgAzafranTresEnfermo.src="img/azafran-tres-enfermo.png";
+    imgAzafranTresFeliz.src="img/azafran-tres-feliz.png";
+    
+    // 4. Azafran 4
+    imgAzafranCuatro.src="img/azafran-cuatro.png";
+    imgAzafranCuatroComidaMala.src="img/azafran-cuatro-comida-mala.png";
+    imgAzafranCuatroEnfermo.src="img/azafran-cuatro-enfermo.png";
+    imgAzafranCuatroFeliz.src="img/azafran-cuatro-feliz.png";
+    
+    // 5. Carne
     imgComidaCarne.src="img/carne.png";
     imgComidaCarne.onload=function(){
         comidaCarne.dibujar();
     }
-    // 3. Chocolate
+    // 6. Chocolate
     imgComidaChocolate.src="img/chocolate.png";
     imgComidaChocolate.onload=function(){
         comidaChocolate.dibujar();
     }
-    // 4. Helado
+    // 7. Helado
     imgComidaHelado.src="img/helado.png";
     imgComidaHelado.onload=function(){
         comidaHelado.dibujar();
     }
-    // 5. Pez
+    // 8. Pez
     imgComidaPez.src="img/pez.png";
     imgComidaPez.onload=function(){
         comidaPez.dibujar();
     }
-    // 6. Pizza 
+    // 9. Pizza 
     imgComidaPizza.src="img/pizza.png";
     imgComidaPizza.onload=function(){
         comidaPizza.dibujar();
     }
-    // 7. Pollo
+    // 10. Pollo
     imgComidaPollo.src="img/pollo.png";
     imgComidaPollo.onload=function(){
         comidaPollo.dibujar();
     }
-    // 8. Catnip
+    // 11. Catnip
     imgComidaCatnip.src="img/hierba.png";
     imgComidaCatnip.onload=function(){
         comidaCatnip.dibujar();
     }
-    // 9. Bola de Pelo
+    // 12. Bola de Pelo
     imgBolaDePelo.src="img/bola-de-pelo.png";
     imgBolaDePelo.onload=function(){
         bolaDePelo.dibujar();
     }
-    //10. Vida Vacia
+    //13. Vida Vacia
     imgVidaVacia.src="img/corazon-vacio.png";
     imgVidaVacia.onload=function(){
         dibujarVida();
     }
-    //11. Vida Llena
+    //14. Vida Llena
     imgVidaLlena.src="img/corazon-lleno.png";
     imgVidaLlena.onload=function(){
         dibujarVida();
     }
-    //12. Boton Jugar
+    //15. Boton Jugar
     imgBotonJugar.src="img/boton-jugar.png";
     imgBotonJugar.onload=function(){
         botonJugar.dibujarBoton();
     }
-    //13. Boton Personaje
+    //16. Boton Personaje
     imgBotonPersonaje.src="img/boton-personaje.png";
     imgBotonPersonaje.onload=function(){
         botonPersonaje.dibujarBoton();
     }
-    //14. Boton Instrucciones
+    //17. Boton Instrucciones
     imgBotonInstrucciones.src="img/boton-instrucciones.png";
     imgBotonInstrucciones.onload=function(){
         botonInstrucciones.dibujarBoton();
     }
-    //15. Boton Reintentar
+    //18. Boton Reintentar
     imgBotonReintentar.src="img/boton-reintentar.png";
     imgBotonMenu.src="img/boton-menu.png";
 
@@ -192,9 +218,6 @@ window.onload=function(){
             //MENU INICIO
             ctx.clearRect(0,0,850,400);
             canvas.style.backgroundImage="url(img/fondo-menu.png)";
-            ctx.fillStyle="black";
-            ctx.font="40px minecraft";
-            ctx.fillText("ALIMENTA A AZAFRAN",220,100);
             botonJugar.dibujarBoton();
             botonPersonaje.dibujarBoton();
             botonInstrucciones.dibujarBoton();
@@ -222,22 +245,45 @@ window.onload=function(){
 
             redibujarTodo();
 
-            //PREGUNTA CONSTANTEMENTE SI LLEGO A 100 PUNTOS, CUANDO LLEGA ACELARA 1 EN VELOCIDAD
             if(acelerar>=100){
-                comidaCarne.velCaida+=1;
-                comidaCatnip.velCaida+=1;
-                comidaChocolate.velCaida+=1;
-                comidaHelado.velCaida+=1;
-                comidaPez.velCaida+=1;
-                comidaPizza.velCaida+=1;
-                comidaPollo.velCaida+=1;
-                bolaDePelo.velCaida+=1;
+                comidaCarne.velCaida+=2;
+                comidaCatnip.velCaida+=2;
+                comidaChocolate.velCaida+=2;
+                comidaHelado.velCaida+=2;
+                comidaPez.velCaida+=2;
+                comidaPizza.velCaida+=2;
+                comidaPollo.velCaida+=2;
+                bolaDePelo.velCaida+=2;
                 acelerar=0;
             }
         }else if(nivel==2){
-            //PERSONAJES
+            //MENU SELECCION PERSONAJE
             ctx.clearRect(0,0,850,400);
             canvas.style.backgroundImage="url(img/fondo-menu.png)";
+            ctx.fillStyle="black";
+            ctx.font="40px minecraft";
+            ctx.fillText("ELIGE TU AZAFRAN",250,100);
+            
+            //Dibujar botones de personajes
+            botonAzafran1.dibujarBoton();
+            botonAzafran2.dibujarBoton();
+            botonAzafran3.dibujarBoton();
+            botonAzafran4.dibujarBoton();
+            
+            //Dibujar botón volver
+            botonMenu.dibujarBoton();
+            ctx.font="20px minecraft";
+            ctx.fillText("Volver",botonMenu.x+20,botonMenu.y+45);
+            
+            //Dibujar indicador de selección
+            ctx.strokeStyle="gold";
+            ctx.lineWidth=4;
+            switch(personajeSeleccionado){
+                case 1: ctx.strokeRect(botonAzafran1.x-5,botonAzafran1.y-5,botonAzafran1.ancho+10,botonAzafran1.alto+10); break;
+                case 2: ctx.strokeRect(botonAzafran2.x-5,botonAzafran2.y-5,botonAzafran2.ancho+10,botonAzafran2.alto+10); break;
+                case 3: ctx.strokeRect(botonAzafran3.x-5,botonAzafran3.y-5,botonAzafran3.ancho+10,botonAzafran3.alto+10); break;
+                case 4: ctx.strokeRect(botonAzafran4.x-5,botonAzafran4.y-5,botonAzafran4.ancho+10,botonAzafran4.alto+10); break;
+            }
         }else{
             // GAME OVER
             canvas.style.backgroundImage="url(img/fondo-menu.png)";
@@ -273,14 +319,14 @@ function Azafran(img,x,y,ancho,alto,catnip){
         if(this.catnip==false && this.x>=-25){//en caso de que su estado sea normal
             this.x-=7;
         }else if(this.catnip==true && this.x<=775){//en caso de que haya comido catnip
-            this.x+=3;
+            this.x+=2;
         }
     }
     this.movDer = function(){
         if(this.catnip==false && this.x<=775){//en caso de que su estado sea normal
             this.x+=7;
         }else if(this.catnip==true && this.x>=-25){//en caso de que haya comido catnip
-            this.x-=3;
+            this.x-=2;
         }
     }
 }
@@ -323,31 +369,62 @@ function Comida(img,x,y,ancho,alto,tipo){
                     acelerar+=10;
                     audioPuntos.play();
                     if(azafranGatito.catnip==false){
-                        azafranGatito.img=imgAzafranFeliz;
+                        switch(personajeSeleccionado){
+                            case 1: azafranGatito.img=imgAzafranFeliz; break;
+                            case 2: azafranGatito.img=imgAzafranDosFeliz; break;
+                            case 3: azafranGatito.img=imgAzafranTresFeliz; break;
+                            case 4: azafranGatito.img=imgAzafranCuatroFeliz; break;
+                        }
                         setTimeout(() => {
-                        azafranGatito.img=imgAzafranUno;
+                            switch(personajeSeleccionado){
+                                case 1: azafranGatito.img=imgAzafranUno; break;
+                                case 2: azafranGatito.img=imgAzafranDos; break;
+                                case 3: azafranGatito.img=imgAzafranTres; break;
+                                case 4: azafranGatito.img=imgAzafranCuatro; break;
+                            }
                         },1500);
+                    }
+                    if(puntos%500===0){
+                        vidas++;
                     }
                     break;
                 case "mala":
                     vidas--;
                     audioVidas.play();
                     if(azafranGatito.catnip==false){
-                        azafranGatito.img=imgAzafranComidaMala;
+                        switch(personajeSeleccionado){
+                            case 1: azafranGatito.img=imgAzafranComidaMala; break;
+                            case 2: azafranGatito.img=imgAzafranDosComidaMala; break;
+                            case 3: azafranGatito.img=imgAzafranTresComidaMala; break;
+                            case 4: azafranGatito.img=imgAzafranCuatroComidaMala; break;
+                        }
                         setTimeout(() => {
-                        azafranGatito.img=imgAzafranUno;   
+                            switch(personajeSeleccionado){
+                                case 1: azafranGatito.img=imgAzafranUno; break;
+                                case 2: azafranGatito.img=imgAzafranDos; break;
+                                case 3: azafranGatito.img=imgAzafranTres; break;
+                                case 4: azafranGatito.img=imgAzafranCuatro; break;
+                            }   
                         },1500);
                     };
                     break;
                 case "catnip":
                     azafranGatito.catnip=true;
+                    switch(personajeSeleccionado){
+                        case 1: azafranGatito.img=imgAzafranEnfermo; break;
+                        case 2: azafranGatito.img=imgAzafranDosEnfermo; break;
+                        case 3: azafranGatito.img=imgAzafranTresEnfermo; break;
+                        case 4: azafranGatito.img=imgAzafranCuatroEnfermo; break;
+                    }
                     setTimeout(() => {
                         azafranGatito.catnip=false;
-                    }, 5000);
-                    azafranGatito.img=imgAzafranEnfermo;
-                    setTimeout(()=> {
-                        azafranGatito.img=imgAzafranUno;
-                    },5000);
+                        switch(personajeSeleccionado){
+                            case 1: azafranGatito.img=imgAzafranUno; break;
+                            case 2: azafranGatito.img=imgAzafranDos; break;
+                            case 3: azafranGatito.img=imgAzafranTres; break;
+                            case 4: azafranGatito.img=imgAzafranCuatro; break;
+                        }
+                    }, 8000);
                     break;
             } 
             this.sortear();
@@ -392,11 +469,33 @@ document.addEventListener("click",function(e){
         y>botonJugar.y & 
         y<botonJugar.y+botonJugar.alto){
             nivel=1;
+            aplicarPersonajeSeleccionado();
         }else if(x>botonPersonaje.x & //BOTON PERSONAJE
         x<botonPersonaje.x+botonPersonaje.ancho & 
         y>botonPersonaje.y & 
         y<botonPersonaje.y+botonPersonaje.alto){
             nivel=2;
+        }
+    }else if(nivel==2){
+        //BOTONES PERSONAJES
+        if(x>botonAzafran1.x && x<botonAzafran1.x+botonAzafran1.ancho && 
+           y>botonAzafran1.y && y<botonAzafran1.y+botonAzafran1.alto){
+            personajeSeleccionado=1;
+        }else if(x>botonAzafran2.x && x<botonAzafran2.x+botonAzafran2.ancho && 
+                 y>botonAzafran2.y && y<botonAzafran2.y+botonAzafran2.alto){
+            personajeSeleccionado=2;
+        }else if(x>botonAzafran3.x && x<botonAzafran3.x+botonAzafran3.ancho && 
+                 y>botonAzafran3.y && y<botonAzafran3.y+botonAzafran3.alto){
+            personajeSeleccionado=3;
+        }else if(x>botonAzafran4.x && x<botonAzafran4.x+botonAzafran4.ancho && 
+                 y>botonAzafran4.y && y<botonAzafran4.y+botonAzafran4.alto){
+            personajeSeleccionado=4;
+        }
+        
+        //BOTON VOLVER
+        if(x>botonMenu.x && x<botonMenu.x+botonMenu.ancho && 
+           y>botonMenu.y && y<botonMenu.y+botonMenu.alto){
+            nivel=0;
         }
     }else if(vidas==0){
         if(x>botonReintentar.x & //BOTON REINTENTAR
@@ -437,7 +536,7 @@ function redibujarTodo(){
     comidaPollo.dibujar();
     comidaCatnip.dibujar();
     bolaDePelo.dibujar();
-    dibujarVida(); //esto es de la variable vida
+    dibujarVida();
 }
 
 //DIBUJA LOS CORAZONES VACIOS Y LLENOS
@@ -449,6 +548,36 @@ function dibujarVida(){
         for(i=0;i<=vidas-1;i++){
             ctx.drawImage(imgVidaLlena,600+(30*i),15,30,30);
         };
+    }
+}
+
+//APLICA EL PERSONAJE SELECCIONADO
+function aplicarPersonajeSeleccionado(){
+    switch(personajeSeleccionado){
+        case 1:
+            azafranGatito.img=imgAzafranUno;
+            imgAzafranFeliz=imgAzafranFeliz;
+            imgAzafranEnfermo=imgAzafranEnfermo;
+            imgAzafranComidaMala=imgAzafranComidaMala;
+            break;
+        case 2:
+            azafranGatito.img=imgAzafranDos;
+            imgAzafranFeliz=imgAzafranDosFeliz;
+            imgAzafranEnfermo=imgAzafranDosEnfermo;
+            imgAzafranComidaMala=imgAzafranDosComidaMala;
+            break;
+        case 3:
+            azafranGatito.img=imgAzafranTres;
+            imgAzafranFeliz=imgAzafranTresFeliz;
+            imgAzafranEnfermo=imgAzafranTresEnfermo;
+            imgAzafranComidaMala=imgAzafranTresComidaMala;
+            break;
+        case 4:
+            azafranGatito.img=imgAzafranCuatro;
+            imgAzafranFeliz=imgAzafranCuatroFeliz;
+            imgAzafranEnfermo=imgAzafranCuatroEnfermo;
+            imgAzafranComidaMala=imgAzafranCuatroComidaMala;
+            break;
     }
 }
 
@@ -477,5 +606,6 @@ function inicioJuego(){
     comidaPollo.velCaida=5;
     bolaDePelo.sortear();
     bolaDePelo.velCaida=5;
+    
+    aplicarPersonajeSeleccionado();
 }
-
