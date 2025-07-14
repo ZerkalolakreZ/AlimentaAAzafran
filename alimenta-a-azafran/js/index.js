@@ -8,6 +8,7 @@ let acelerar=0;
 let nivel=0;
 let fuente;
 let puntajeGuardado=false;
+let contador=0;
 
 //VARIABLES imgES
 //Imagenes Azafran 1
@@ -229,15 +230,30 @@ window.onload=function(){
             audioJuego.play();
             audioMenu.pause();
             audioPerdida.pause();
-            comidaCarne.caer();
-            comidaChocolate.caer();
-            comidaHelado.caer();
-            comidaPez.caer();
-            comidaPizza.caer();
-            comidaPollo.caer();
-            comidaCatnip.caer();
-            bolaDePelo.caer();
-        
+
+            contador++;
+
+            if(contador<73){
+                comidaCarne.caer();
+            }else if(contador>72 && contador<121){
+                comidaCarne.caer();
+                comidaChocolate.caer();
+            }else if(contador>120 && contador<241){
+                comidaCarne.caer();
+                comidaChocolate.caer();
+                comidaHelado.caer();
+                comidaPez.caer();
+            }else{
+                comidaCarne.caer();
+                comidaChocolate.caer();
+                comidaHelado.caer();
+                comidaPez.caer();
+                comidaPizza.caer();
+                comidaPollo.caer();
+                comidaCatnip.caer();
+                bolaDePelo.caer();
+            }
+
             comidaCarne.colision();
             comidaChocolate.colision();
             comidaHelado.colision();
@@ -343,7 +359,7 @@ function Comida(img,x,y,ancho,alto,tipo){
     // Respawn
     this.sortear=function(){
         this.x=Math.floor(Math.random()*(720-30+1))+30;
-        this.y=Math.floor(Math.random()*(-40-(-130)+1))+(-130);
+        this.y=Math.floor(Math.random()*(-70-(-300)+1))+(-300);
     }
     // Colision
     this.colision=function(){
