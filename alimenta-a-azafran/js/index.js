@@ -89,10 +89,10 @@ let botonReintentar=new Boton(imgBotonReintentar,100,300,300,70);
 let botonMenu=new Boton(imgBotonMenu,460,300,300,70);
 
 //OBJETOS: BOTONES PERSONAJES
-let botonAzafran1=new Boton(imgAzafranUno,200,150,100,100);
-let botonAzafran2=new Boton(imgAzafranDos,350,150,100,100);
-let botonAzafran3=new Boton(imgAzafranTres,500,150,100,100);
-let botonAzafran4=new Boton(imgAzafranCuatro,650,150,100,100);
+let botonAzafran1=new Boton(imgAzafranUno,160,150,100,100);
+let botonAzafran2=new Boton(imgAzafranDos,310,150,100,100);
+let botonAzafran3=new Boton(imgAzafranTres,460,150,100,100);
+let botonAzafran4=new Boton(imgAzafranCuatro,610,150,100,100);
 
 // CARGA DE CANVAS
 window.onload=function(){
@@ -259,10 +259,7 @@ window.onload=function(){
         }else if(nivel==2){
             //MENU SELECCION PERSONAJE
             ctx.clearRect(0,0,850,400);
-            canvas.style.backgroundImage="url(img/fondo-menu.png)";
-            ctx.fillStyle="black";
-            ctx.font="40px minecraft";
-            ctx.fillText("ELIGE TU AZAFRAN",250,100);
+            canvas.style.backgroundImage="url(img/menu-gatitos.jpg)";
             
             //Dibujar botones de personajes
             botonAzafran1.dibujarBoton();
@@ -272,18 +269,13 @@ window.onload=function(){
             
             //Dibujar botón volver
             botonMenu.dibujarBoton();
-            ctx.font="20px minecraft";
-            ctx.fillText("Volver",botonMenu.x+20,botonMenu.y+45);
-            
-            //Dibujar indicador de selección
-            ctx.strokeStyle="gold";
-            ctx.lineWidth=4;
-            switch(personajeSeleccionado){
-                case 1: ctx.strokeRect(botonAzafran1.x-5,botonAzafran1.y-5,botonAzafran1.ancho+10,botonAzafran1.alto+10); break;
-                case 2: ctx.strokeRect(botonAzafran2.x-5,botonAzafran2.y-5,botonAzafran2.ancho+10,botonAzafran2.alto+10); break;
-                case 3: ctx.strokeRect(botonAzafran3.x-5,botonAzafran3.y-5,botonAzafran3.ancho+10,botonAzafran3.alto+10); break;
-                case 4: ctx.strokeRect(botonAzafran4.x-5,botonAzafran4.y-5,botonAzafran4.ancho+10,botonAzafran4.alto+10); break;
-            }
+        }else if(nivel==3){
+            //MENU INSTRUCCIONES
+            ctx.clearRect(0,0,850,400);
+            canvas.style.backgroundImage="url(img/instrucciones.jpg)";
+
+            //Dibujar botón volver
+            botonMenu.dibujarBoton();
         }else{
             // GAME OVER
             canvas.style.backgroundImage="url(img/game-over.jpg)";
@@ -436,9 +428,18 @@ function Boton(img,x,y,ancho,alto){
     this.y=y;
     this.ancho=ancho;
     this.alto=alto;
+    this.escalado=false;
 
     this.dibujarBoton=function(){
-        ctx.drawImage(this.img,this.x,this.y,this.ancho,this.alto);
+        if(this.escalado){
+            let nuevoAncho = this.ancho * 1.25;
+            let nuevoAlto = this.alto * 1.25;
+            let offsetX = (this.ancho - nuevoAncho)/2;
+            let offsetY = (this.alto - nuevoAlto)/2;
+            ctx.drawImage(this.img, this.x+offsetX, this.y+offsetY, nuevoAncho, nuevoAlto);
+        }else{
+            ctx.drawImage(this.img,this.x,this.y,this.ancho,this.alto);
+        }
     }
 }
 
@@ -473,26 +474,46 @@ document.addEventListener("click",function(e){
         y>botonPersonaje.y & 
         y<botonPersonaje.y+botonPersonaje.alto){
             nivel=2;
+        }else if(x>botonInstrucciones.x & //BOTON INSTRUCCIONES
+        x<botonInstrucciones.x+botonInstrucciones.ancho &
+        y>botonInstrucciones.y &
+        y<botonInstrucciones.y+botonInstrucciones.alto){
+            nivel=3;
         }
     }else if(nivel==2){
+        botonAzafran1.escalado=false;
+        botonAzafran2.escalado=false;
+        botonAzafran3.escalado=false;
+        botonAzafran4.escalado=false;
+        
         //BOTONES PERSONAJES
         if(x>botonAzafran1.x && x<botonAzafran1.x+botonAzafran1.ancho && 
-           y>botonAzafran1.y && y<botonAzafran1.y+botonAzafran1.alto){
+        y>botonAzafran1.y && y<botonAzafran1.y+botonAzafran1.alto){
             personajeSeleccionado=1;
+            botonAzafran1.escalado = true;
         }else if(x>botonAzafran2.x && x<botonAzafran2.x+botonAzafran2.ancho && 
-                 y>botonAzafran2.y && y<botonAzafran2.y+botonAzafran2.alto){
+                y>botonAzafran2.y && y<botonAzafran2.y+botonAzafran2.alto){
             personajeSeleccionado=2;
+            botonAzafran2.escalado = true;
         }else if(x>botonAzafran3.x && x<botonAzafran3.x+botonAzafran3.ancho && 
-                 y>botonAzafran3.y && y<botonAzafran3.y+botonAzafran3.alto){
+                y>botonAzafran3.y && y<botonAzafran3.y+botonAzafran3.alto){
             personajeSeleccionado=3;
+            botonAzafran3.escalado = true;
         }else if(x>botonAzafran4.x && x<botonAzafran4.x+botonAzafran4.ancho && 
-                 y>botonAzafran4.y && y<botonAzafran4.y+botonAzafran4.alto){
+                y>botonAzafran4.y && y<botonAzafran4.y+botonAzafran4.alto){
             personajeSeleccionado=4;
+            botonAzafran4.escalado = true;
         }
         
         //BOTON VOLVER
         if(x>botonMenu.x && x<botonMenu.x+botonMenu.ancho && 
-           y>botonMenu.y && y<botonMenu.y+botonMenu.alto){
+        y>botonMenu.y && y<botonMenu.y+botonMenu.alto){
+            nivel=0;
+        }
+    }else if(nivel==3){
+        //BOTON VOLVER
+        if(x>botonMenu.x && x<botonMenu.x+botonMenu.ancho && 
+        y>botonMenu.y && y<botonMenu.y+botonMenu.alto){
             nivel=0;
         }
     }else if(vidas==0){
