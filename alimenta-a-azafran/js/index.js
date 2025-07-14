@@ -60,6 +60,9 @@ let imgBotonRanking= new Image();
 let audioPuntos
 let audioVidas
 let audioPerdida
+let audioMenu
+let audioJuego
+let audioHierba
 
 //OBJETOS: GATITO AZAFRAN
 let azafranGatito = new Azafran(imgAzafranUno,425,307,100,100, false);
@@ -189,7 +192,18 @@ window.onload=function(){
     audioVidas= new Audio();
     audioVidas.src="audios/comida-mala.mp3";
     audioVidas.volume=0.5;
+    
+    audioMenu= new Audio();
+    audioMenu.src="audios/menu.mp3";
 
+    audioHierba= new Audio();
+    audioHierba.src="audios/hierba.mp3";
+    audioHierba.volume=0.5;
+
+    audioJuego= new Audio();
+    audioJuego.src="audios/juego.mp3";
+    audioJuego.volume=0.3;
+    
     //Fonts
     fuente= new FontFace("minecraft","url(fonts/Minecraft.ttf)");
     document.fonts.add(fuente);
@@ -205,10 +219,16 @@ window.onload=function(){
             botonPersonaje.dibujarBoton();
             botonInstrucciones.dibujarBoton();
             botonRanking.dibujarBoton();
+            audioMenu.play();
+            audioJuego.pause();
+            audioPerdida.pause();            
 
         }else if(nivel==1 && vidas>0){
             ctx.clearRect(0,0,850,400);
             canvas.style.backgroundImage="url(img/casa.png)";
+            audioJuego.play();
+            audioMenu.pause();
+            audioPerdida.pause();
             comidaCarne.caer();
             comidaChocolate.caer();
             comidaHelado.caer();
@@ -262,6 +282,7 @@ window.onload=function(){
                 guardarEnRanking(puntos);
                 puntajeGuardado=true;
             }
+            audioJuego.pause();
             audioPerdida.play();
             botonReintentar.dibujarBoton();
             botonMenu.dibujarBoton();
@@ -354,6 +375,8 @@ function Comida(img,x,y,ancho,alto,tipo){
                     };
                     break;
                 case "catnip":
+                    audioJuego.pause();
+                    audioHierba.play();   
                     azafranGatito.catnip=true;
                     setTimeout(() => {
                         azafranGatito.catnip=false;
@@ -500,6 +523,7 @@ function inicioJuego(){
     bolaDePelo.velCaida=5;
 }
 
+//RANKING
 function guardarEnRanking(puntaje){
     let ranking = JSON.parse(sessionStorage.getItem('ranking')) || [];
     let nuevaEntrada = {
