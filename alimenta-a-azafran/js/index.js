@@ -7,6 +7,7 @@ let gameOver=false;
 let acelerar=0;
 let nivel=0;
 let fuente;
+let puntajeGuardado=false;
 
 //VARIABLES imgES
 //Imagenes Azafran 1
@@ -53,6 +54,7 @@ let imgBotonPersonaje=new Image();
 let imgBotonInstrucciones=new Image();
 let imgBotonReintentar=new Image();
 let imgBotonMenu=new Image();
+let imgBotonRanking= new Image();
 
 // VARIABLES SONIDOS
 let audioPuntos
@@ -82,10 +84,11 @@ bolaDePelo.sortear();
 
 //OBJETOS: BOTONES
 let botonJugar=new Boton(imgBotonJugar,280,120,300,70);
-let botonPersonaje=new Boton(imgBotonPersonaje,280,200,300,70);
-let botonInstrucciones=new Boton(imgBotonInstrucciones,280,280,300,70);
+let botonPersonaje=new Boton(imgBotonPersonaje,280,180,300,70);
+let botonInstrucciones=new Boton(imgBotonInstrucciones,280,240,300,70);
 let botonReintentar=new Boton(imgBotonReintentar,100,300,300,70);
 let botonMenu=new Boton(imgBotonMenu,460,300,300,70);
+let botonRanking = new Boton(imgBotonRanking, 280, 300, 300, 70);
 
 // CARGA DE CANVAS
 window.onload=function(){
@@ -169,6 +172,12 @@ window.onload=function(){
     //15. Boton Reintentar
     imgBotonReintentar.src="img/boton-reintentar.png";
     imgBotonMenu.src="img/boton-menu.png";
+
+    //16. Boton Ranking
+    imgBotonRanking.src="img/boton-ranking.png";
+    imgBotonRanking.onload=function(){
+        botonRanking.dibujarBoton();
+    }
     
     //Audios
     audioPuntos= new Audio();
@@ -195,6 +204,7 @@ window.onload=function(){
             botonJugar.dibujarBoton();
             botonPersonaje.dibujarBoton();
             botonInstrucciones.dibujarBoton();
+            botonRanking.dibujarBoton();
 
         }else if(nivel==1 && vidas>0){
             ctx.clearRect(0,0,850,400);
@@ -235,6 +245,11 @@ window.onload=function(){
             //PERSONAJES
             ctx.clearRect(0,0,850,400);
             canvas.style.backgroundImage="url(img/menu-gatitos.jpg)";
+        }else if(nivel==3){
+            ctx.clearRect(0,0,850,400);
+            canvas.style.backgroundImage="url(img/ranking.jpg)";
+            mostrarRanking();
+            botonMenu.dibujarBoton();
         }else{
             // GAME OVER
             canvas.style.backgroundImage="url(img/game-over.jpg)";
@@ -243,6 +258,10 @@ window.onload=function(){
             ctx.font="30px minecraft";
             ctx.fillStyle= "white";
             ctx.fillText("Puntos: "+puntos,650,50);
+            if(!puntajeGuardado){
+                guardarEnRanking(puntos);
+                puntajeGuardado=true;
+            }
             audioPerdida.play();
             botonReintentar.dibujarBoton();
             botonMenu.dibujarBoton();
@@ -392,7 +411,13 @@ document.addEventListener("click",function(e){
         y>botonPersonaje.y & 
         y<botonPersonaje.y+botonPersonaje.alto){
             nivel=2;
+        }else if(x > botonRanking.x && x < botonRanking.x + botonRanking.ancho &&
+        y > botonRanking.y && y < botonRanking.y + botonRanking.alto){
+        nivel = 3;
         }
+    }else if(x > botonMenu.x && x < botonMenu.x + botonMenu.ancho &&
+        y > botonMenu.y && y < botonMenu.y + botonMenu.alto){
+    nivel = 0;
     }else if(vidas==0){
         if(x>botonReintentar.x & //BOTON REINTENTAR
         x<botonReintentar.x+botonReintentar.ancho & 
@@ -450,6 +475,7 @@ function dibujarVida(){
 function inicioJuego(){
     vidas=7;
     puntos=0;
+    puntajeGuardado=false;
 
     azafranGatito.x=425;
     azafranGatito.y=307;
@@ -474,3 +500,25 @@ function inicioJuego(){
     bolaDePelo.velCaida=5;
 }
 
+function guardarEnRanking(puntaje){
+    let ranking = JSON.parse(sessionStorage.getItem('ranking')) || [];
+    let nuevaEntrada = {
+        puntos: puntaje,
+        fecha: new Date().toLocaleString()
+    };
+    if (ranking.length >= 3) {
+    ranking = ranking.slice(-2);}
+    ranking.push(nuevaEntrada);
+    sessionStorage.setItem('ranking', JSON.stringify(ranking));
+}
+
+function mostrarRanking(){
+    let ranking = JSON.parse(sessionStorage.getItem('ranking')) || [];
+    ctx.font = "25px minecraft";
+    ctx.fillStyle = "white";
+    ctx.fillText("",300,150);
+
+    ranking.forEach((entry, index) => {
+        ctx.fillText(`${index + 1}. ${entry.puntos} pts`, 300, 150 + index * 40);
+    });
+}
