@@ -383,34 +383,32 @@ function Comida(img,x,y,ancho,alto,tipo){
                     audioPuntos.play();
                     if(azafranGatito.catnip==false){
                         azafranGatito.img=imgAzafranFeliz;
-                        setTimeout(() => {
-                        azafranGatito.img=imgAzafranUno;
-                        },1500);
                     }
-                    break;
+                break;
                 case "mala":
                     vidas--;
                     audioVidas.play();
                     if(azafranGatito.catnip==false){
                         azafranGatito.img=imgAzafranComidaMala;
-                        setTimeout(() => {
-                        azafranGatito.img=imgAzafranUno;   
-                        },1500);
                     };
-                    break;
+                break;
                 case "catnip":
                     audioJuego.pause();
                     audioHierba.play();   
                     azafranGatito.catnip=true;
                     setTimeout(() => {
                         azafranGatito.catnip=false;
-                    }, 15000);
+                    }, 5000);
                     azafranGatito.img=imgAzafranEnfermo;
-                    setTimeout(()=> {
-                        azafranGatito.img=imgAzafranUno;
-                    }, 15000);
-                    break;
-            } 
+                break;
+            }
+            setTimeout(()=>{
+                if(azafranGatito.catnip==false){
+                    azafranGatito.img=imgAzafranUno;
+                }else if(azafranGatito.catnip==true){
+                    setTimeout(()=>{azafranGatito.img=imgAzafranUno},3500);
+                }
+            },1500) 
             this.sortear();
         }
     }
