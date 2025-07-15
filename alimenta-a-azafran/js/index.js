@@ -406,7 +406,10 @@ function Comida(img,x,y,ancho,alto,tipo){
                 if(azafranGatito.catnip==false){
                     azafranGatito.img=imgAzafranUno;
                 }else if(azafranGatito.catnip==true){
-                    setTimeout(()=>{azafranGatito.img=imgAzafranUno},3500);
+                    setTimeout(()=>{
+                        azafranGatito.img=imgAzafranUno
+                        audioHierba.pause();
+                    },3500);
                 }
             },1500) 
             this.sortear();
