@@ -90,7 +90,7 @@ bolaDePelo.sortear();
 //OBJETOS: BOTONES
 let botonJugar=new Boton(imgBotonJugar,280,120,300,70);
 let botonPersonaje=new Boton(imgBotonPersonaje,280,180,300,70);
-let botonInstrucciones=new Boton(imgBotonInstrucciones,280,240,300,70);
+let botonInstrucciones=new Boton(imgBotonInstrucciones,280,210,300,70);
 let botonReintentar=new Boton(imgBotonReintentar,100,300,300,70);
 let botonMenu=new Boton(imgBotonMenu,460,300,300,70);
 let botonRanking = new Boton(imgBotonRanking, 280, 300, 300, 70);
@@ -224,7 +224,6 @@ window.onload=function(){
             ctx.clearRect(0,0,850,400);
             canvas.style.backgroundImage="url(img/menu.jpg)";
             botonJugar.dibujarBoton();
-            botonPersonaje.dibujarBoton();
             botonInstrucciones.dibujarBoton();
             botonRanking.dibujarBoton();
             manoMenu.dibujarBoton();
@@ -459,11 +458,6 @@ document.addEventListener("click",function(e){
         y<botonJugar.y+botonJugar.alto){
             nivel=1;
             inicioJuego();
-        }else if(x>botonPersonaje.x & //BOTON PERSONAJE
-        x<botonPersonaje.x+botonPersonaje.ancho & 
-        y>botonPersonaje.y & 
-        y<botonPersonaje.y+botonPersonaje.alto){
-            nivel=2;
         }else if(x > botonRanking.x && x < botonRanking.x + botonRanking.ancho &&
         y > botonRanking.y && y < botonRanking.y + botonRanking.alto){
         nivel = 3;
