@@ -294,6 +294,10 @@ window.onload=function(){
             canvas.style.backgroundImage="url(img/ranking.jpg)";
             mostrarRanking();
             botonMenu.dibujarBoton();
+        }else if(nivel==5){
+            ctx.clearRect(0,0,850,400);
+            canvas.style.backgroundImage="url(img/instrucciones.jpg)"
+            botonMenu.dibujarBoton();
         }else{
             // GAME OVER
             canvas.style.backgroundImage="url(img/game-over.jpg)";
@@ -463,10 +467,17 @@ document.addEventListener("click",function(e){
         }else if(x > botonRanking.x && x < botonRanking.x + botonRanking.ancho &&
         y > botonRanking.y && y < botonRanking.y + botonRanking.alto){
         nivel = 3;
+        }else if(x>botonInstrucciones.x && 
+                x<botonInstrucciones.x+botonInstrucciones.ancho &&
+                y>botonInstrucciones.y && 
+                y<botonInstrucciones.y+botonInstrucciones.alto){
+            nivel=5;
         }
-    }else if(x > botonMenu.x && x < botonMenu.x + botonMenu.ancho &&
+    }else if(nivel==3 || nivel==5){
+        if(x > botonMenu.x && x < botonMenu.x + botonMenu.ancho &&
         y > botonMenu.y && y < botonMenu.y + botonMenu.alto){
-    nivel = 0;
+        nivel = 0;
+        }
     }else if(vidas==0){
         if(x>botonReintentar.x & //BOTON REINTENTAR
         x<botonReintentar.x+botonReintentar.ancho & 
