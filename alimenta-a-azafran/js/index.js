@@ -56,6 +56,7 @@ let imgBotonInstrucciones=new Image();
 let imgBotonReintentar=new Image();
 let imgBotonMenu=new Image();
 let imgBotonRanking= new Image();
+let imgManoMenu = new Image();
 
 // VARIABLES SONIDOS
 let audioPuntos
@@ -93,6 +94,7 @@ let botonInstrucciones=new Boton(imgBotonInstrucciones,280,240,300,70);
 let botonReintentar=new Boton(imgBotonReintentar,100,300,300,70);
 let botonMenu=new Boton(imgBotonMenu,460,300,300,70);
 let botonRanking = new Boton(imgBotonRanking, 280, 300, 300, 70);
+let manoMenu = new Boton(imgManoMenu,botonJugar.x-70,botonJugar.y,60,60);
 
 // CARGA DE CANVAS
 window.onload=function(){
@@ -182,6 +184,11 @@ window.onload=function(){
     imgBotonRanking.onload=function(){
         botonRanking.dibujarBoton();
     }
+    //17. Mano Menu
+    imgManoMenu.src="img/mano-menu.png";
+    imgManoMenu.onload=function(){
+        manoMenu.dibujarBoton();
+    };
     
     //Audios
     audioPuntos= new Audio();
@@ -220,6 +227,7 @@ window.onload=function(){
             botonPersonaje.dibujarBoton();
             botonInstrucciones.dibujarBoton();
             botonRanking.dibujarBoton();
+            manoMenu.dibujarBoton();
             audioMenu.play();
             audioJuego.pause();
             audioPerdida.pause();            
@@ -473,6 +481,32 @@ document.addEventListener("click",function(e){
         }
     }
 });
+
+document.addEventListener("mousemove",function(e){
+    let rect=canvas.getBoundingClientRect();
+    let x=e.clientX-rect.left;
+    let y=e.clientY-rect.top;
+    if(nivel==0){
+        if(x>botonJugar.x & //BOTON JUGAR
+        x<botonJugar.x+botonJugar.ancho & 
+        y>botonJugar.y & 
+        y<botonJugar.y+botonJugar.alto){
+            manoMenu.x=botonJugar.x-70;
+            manoMenu.y=botonJugar.y;
+            console.log("estas en el boton jugar");
+        }else if(x>botonInstrucciones.x && x<botonInstrucciones.x+botonInstrucciones.ancho &&
+                y>botonInstrucciones.y && y<botonInstrucciones.y+botonInstrucciones.alto){
+            manoMenu.x=botonInstrucciones.x-70;
+            manoMenu.y=botonInstrucciones.y;
+        }else if(x > botonRanking.x && x < botonRanking.x + botonRanking.ancho &&
+        y > botonRanking.y && y < botonRanking.y + botonRanking.alto){
+            manoMenu.x=botonRanking.x-70;
+            manoMenu.y=botonRanking.y;
+            console.log("estas en el boton ranking");
+        }
+    }
+});
+
 
 //DIBUJA LOS TEXTOS
 function dibujarTextos(){
