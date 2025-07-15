@@ -445,6 +445,7 @@ document.addEventListener("click",function(e){
         y>botonJugar.y & 
         y<botonJugar.y+botonJugar.alto){
             nivel=1;
+            inicioJuego();
         }else if(x>botonPersonaje.x & //BOTON PERSONAJE
         x<botonPersonaje.x+botonPersonaje.ancho & 
         y>botonPersonaje.y & 
@@ -520,6 +521,7 @@ function inicioJuego(){
     azafranGatito.y=307;
     azafranGatito.catnip=false;
 
+    contador=0;
     acelerar=0;
     comidaCarne.sortear();
     comidaCarne.velCaida=5;
@@ -562,3 +564,5 @@ function mostrarRanking(){
         ctx.fillText(`${index + 1}. ${entry.puntos} pts`, 300, 150 + index * 40);
     });
 }
+
+
