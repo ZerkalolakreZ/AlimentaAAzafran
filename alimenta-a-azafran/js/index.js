@@ -67,7 +67,7 @@ let audioJuego
 let audioHierba
 
 //OBJETOS: GATITO AZAFRAN
-let azafranGatito = new Azafran(imgAzafranUno,425,307,100,100, false);
+let azafranGatito = new Azafran(imgAzafranUno,425,307,90,100, false);
 
 //OBJETOS: COMIDAS
 let comidaCarne = new Comida(imgComidaCarne,0,0,53,43,"buena");
@@ -371,9 +371,9 @@ function Comida(img,x,y,ancho,alto,tipo){
     }
     // Colision
     this.colision=function(){
-        if(this.y+this.alto>=(azafranGatito.y+15) &&
+        if(this.y+this.alto>=(azafranGatito.y+20) &&
         this.y<=(azafranGatito.y+azafranGatito.alto-12) &&
-        this.x+this.ancho>=(azafranGatito.x+26) &&
+        this.x+this.ancho>=(azafranGatito.x+15) &&
         this.x<=(azafranGatito.x+azafranGatito.ancho-26)) 
         {
             switch(this.tipo){
