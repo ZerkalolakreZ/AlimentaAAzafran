@@ -7,7 +7,12 @@ let gameOver=false;
 let acelerar=0;
 let nivel=0;
 let fuente;
+<<<<<<< HEAD
 let personajeSeleccionado=1; // 1=Azafran1, 2=Azafran2, 3=Azafran3, 4=Azafran4
+=======
+let puntajeGuardado=false;
+let contador=0;
+>>>>>>> a06567fcbd9d137b30313ecf040f9d7a54d01ae7
 
 //VARIABLES imgES
 //Imagenes Azafran 1
