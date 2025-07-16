@@ -7,12 +7,9 @@ let gameOver=false;
 let acelerar=0;
 let nivel=0;
 let fuente;
-<<<<<<< HEAD
 let personajeSeleccionado=1; // 1=Azafran1, 2=Azafran2, 3=Azafran3, 4=Azafran4
-=======
 let puntajeGuardado=false;
 let contador=0;
->>>>>>> a06567fcbd9d137b30313ecf040f9d7a54d01ae7
 
 //VARIABLES imgES
 //Imagenes Azafran 1
@@ -59,14 +56,20 @@ let imgBotonPersonaje=new Image();
 let imgBotonInstrucciones=new Image();
 let imgBotonReintentar=new Image();
 let imgBotonMenu=new Image();
+let imgBotonRanking= new Image();
+let imgManoMenu = new Image();
+let imgBotonComenzar = new Image();
 
 // VARIABLES SONIDOS
 let audioPuntos
 let audioVidas
 let audioPerdida
+let audioMenu
+let audioJuego
+let audioHierba
 
 //OBJETOS: GATITO AZAFRAN
-let azafranGatito = new Azafran(imgAzafranUno,425,307,100,100, false);
+let azafranGatito = new Azafran(imgAzafranUno,425,307,90,100, false);
 
 //OBJETOS: COMIDAS
 let comidaCarne = new Comida(imgComidaCarne,0,0,53,43,"buena");
@@ -88,10 +91,13 @@ bolaDePelo.sortear();
 
 //OBJETOS: BOTONES
 let botonJugar=new Boton(imgBotonJugar,280,120,300,70);
-let botonPersonaje=new Boton(imgBotonPersonaje,280,200,300,70);
-let botonInstrucciones=new Boton(imgBotonInstrucciones,280,280,300,70);
+let botonPersonaje=new Boton(imgBotonPersonaje,280,180,300,70);
+let botonInstrucciones=new Boton(imgBotonInstrucciones,280,240,300,70);
 let botonReintentar=new Boton(imgBotonReintentar,100,300,300,70);
-let botonMenu=new Boton(imgBotonMenu,460,300,300,70);
+let botonMenu=new Boton(imgBotonMenu,280,320,300,70);
+let botonRanking = new Boton(imgBotonRanking, 280, 300, 300, 70);
+let botonComenzar = new Boton(imgBotonComenzar, 280, 260, 300, 70);
+let manoMenu = new Boton(imgManoMenu,botonJugar.x-70,botonJugar.y,60,60);
 
 //OBJETOS: BOTONES PERSONAJES
 let botonAzafran1=new Boton(imgAzafranUno,160,150,100,100);
@@ -187,7 +193,7 @@ window.onload=function(){
     imgBotonJugar.onload=function(){
         botonJugar.dibujarBoton();
     }
-    //13. Boton Personaje
+    //16. Boton Personaje
     imgBotonPersonaje.src="img/boton-menu.png";
     imgBotonPersonaje.onload=function(){
         botonPersonaje.dibujarBoton();
@@ -200,6 +206,22 @@ window.onload=function(){
     //18. Boton Reintentar
     imgBotonReintentar.src="img/boton-reintentar.png";
     imgBotonMenu.src="img/boton-menu.png";
+
+    //19. Boton Ranking
+    imgBotonRanking.src="img/boton-ranking.png";
+    imgBotonRanking.onload=function(){
+        botonRanking.dibujarBoton();
+    }
+    //20. Mano Menu
+    imgManoMenu.src="img/mano-menu.png";
+    imgManoMenu.onload=function(){
+        manoMenu.dibujarBoton();
+    };
+    //21. Boton Comenzar (nuevo)
+    imgBotonComenzar.src="img/boton-jugar.png";
+    imgBotonComenzar.onload=function(){
+        botonComenzar.dibujarBoton();
+    };
     
     //Audios
     audioPuntos= new Audio();
@@ -211,7 +233,18 @@ window.onload=function(){
     audioVidas= new Audio();
     audioVidas.src="audios/comida-mala.mp3";
     audioVidas.volume=0.5;
+    
+    audioMenu= new Audio();
+    audioMenu.src="audios/menu.mp3";
 
+    audioHierba= new Audio();
+    audioHierba.src="audios/hierba.mp3";
+    audioHierba.volume=0.5;
+
+    audioJuego= new Audio();
+    audioJuego.src="audios/juego.mp3";
+    audioJuego.volume=0.3;
+    
     //Fonts
     fuente= new FontFace("minecraft","url(fonts/Minecraft.ttf)");
     document.fonts.add(fuente);
@@ -224,21 +257,59 @@ window.onload=function(){
             ctx.clearRect(0,0,850,400);
             canvas.style.backgroundImage="url(img/menu.jpg)";
             botonJugar.dibujarBoton();
-            botonPersonaje.dibujarBoton();
             botonInstrucciones.dibujarBoton();
+            botonRanking.dibujarBoton();
+            manoMenu.dibujarBoton();
+            audioMenu.play();
+            audioJuego.pause();
+            audioPerdida.pause();            
 
-        }else if(nivel==1 && vidas>0){
+        }else if(nivel==1){
+            //MENU SELECCION PERSONAJE
+            ctx.clearRect(0,0,850,400);
+            canvas.style.backgroundImage="url(img/menu-gatitos.jpg)";
+            
+            //Dibujar botones de personajes
+            botonAzafran1.dibujarBoton();
+            botonAzafran2.dibujarBoton();
+            botonAzafran3.dibujarBoton();
+            botonAzafran4.dibujarBoton();
+            
+            //Dibujar botón comenzar y volver
+            botonComenzar.dibujarBoton();
+            botonMenu.dibujarBoton();
+        
+        }else if(nivel==2 && vidas>0){
+            //JUEGO PRINCIPAL
             ctx.clearRect(0,0,850,400);
             canvas.style.backgroundImage="url(img/casa.png)";
-            comidaCarne.caer();
-            comidaChocolate.caer();
-            comidaHelado.caer();
-            comidaPez.caer();
-            comidaPizza.caer();
-            comidaPollo.caer();
-            comidaCatnip.caer();
-            bolaDePelo.caer();
-        
+            audioJuego.play();
+            audioMenu.pause();
+            audioPerdida.pause();
+
+            contador++;
+
+            if(contador<73){
+                comidaCarne.caer();
+            }else if(contador>72 && contador<121){
+                comidaCarne.caer();
+                comidaChocolate.caer();
+            }else if(contador>120 && contador<241){
+                comidaCarne.caer();
+                comidaChocolate.caer();
+                comidaHelado.caer();
+                comidaPez.caer();
+            }else{
+                comidaCarne.caer();
+                comidaChocolate.caer();
+                comidaHelado.caer();
+                comidaPez.caer();
+                comidaPizza.caer();
+                comidaPollo.caer();
+                comidaCatnip.caer();
+                bolaDePelo.caer();
+            }
+
             comidaCarne.colision();
             comidaChocolate.colision();
             comidaHelado.colision();
@@ -261,25 +332,16 @@ window.onload=function(){
                 bolaDePelo.velCaida+=2;
                 acelerar=0;
             }
-        }else if(nivel==2){
-            //MENU SELECCION PERSONAJE
-            ctx.clearRect(0,0,850,400);
-            canvas.style.backgroundImage="url(img/menu-gatitos.jpg)";
-            
-            //Dibujar botones de personajes
-            botonAzafran1.dibujarBoton();
-            botonAzafran2.dibujarBoton();
-            botonAzafran3.dibujarBoton();
-            botonAzafran4.dibujarBoton();
-            
-            //Dibujar botón volver
-            botonMenu.dibujarBoton();
         }else if(nivel==3){
             //MENU INSTRUCCIONES
             ctx.clearRect(0,0,850,400);
             canvas.style.backgroundImage="url(img/instrucciones.jpg)";
-
-            //Dibujar botón volver
+            botonMenu.dibujarBoton();
+        }else if(nivel==4){
+            // RANKING
+            ctx.clearRect(0,0,850,400);
+            canvas.style.backgroundImage="url(img/ranking.jpg)";
+            mostrarRanking();
             botonMenu.dibujarBoton();
         }else{
             // GAME OVER
@@ -289,6 +351,11 @@ window.onload=function(){
             ctx.font="30px minecraft";
             ctx.fillStyle= "white";
             ctx.fillText("Puntos: "+puntos,650,50);
+            if(!puntajeGuardado){
+                guardarEnRanking(puntos);
+                puntajeGuardado=true;
+            }
+            audioJuego.pause();
             audioPerdida.play();
             botonReintentar.dibujarBoton();
             botonMenu.dibujarBoton();
@@ -349,13 +416,13 @@ function Comida(img,x,y,ancho,alto,tipo){
     // Respawn
     this.sortear=function(){
         this.x=Math.floor(Math.random()*(720-30+1))+30;
-        this.y=Math.floor(Math.random()*(-40-(-130)+1))+(-130);
+        this.y=Math.floor(Math.random()*(-70-(-300)+1))+(-300);
     }
     // Colision
     this.colision=function(){
-        if(this.y+this.alto>=(azafranGatito.y+15) &&
+        if(this.y+this.alto>=(azafranGatito.y+20) &&
         this.y<=(azafranGatito.y+azafranGatito.alto-12) &&
-        this.x+this.ancho>=(azafranGatito.x+26) &&
+        this.x+this.ancho>=(azafranGatito.x+15) &&
         this.x<=(azafranGatito.x+azafranGatito.ancho-26)) 
         {
             switch(this.tipo){
@@ -402,8 +469,10 @@ function Comida(img,x,y,ancho,alto,tipo){
                             }   
                         },1500);
                     };
-                    break;
+                break;
                 case "catnip":
+                    audioJuego.pause();
+                    audioHierba.play();   
                     azafranGatito.catnip=true;
                     switch(personajeSeleccionado){
                         case 1: azafranGatito.img=imgAzafranEnfermo; break;
@@ -460,32 +529,32 @@ document.addEventListener("keydown",function(e){
     }
 })
 
-//ESCUCHADOR DE EVENTOS DE MOUSE
+// ESCUCHADOR DE EVENTOS DE MOUSE
 document.addEventListener("click",function(e){
-    //X e Y ya no dependen de la posicion del canvas en la pagina
     let rect=canvas.getBoundingClientRect();
     let x=e.clientX-rect.left;
     let y=e.clientY-rect.top;
     
-    if(nivel==0){ 
+    if(nivel==0){
+        //MENU INICIO 
         if(x>botonJugar.x & //BOTON JUGAR
         x<botonJugar.x+botonJugar.ancho & 
         y>botonJugar.y & 
         y<botonJugar.y+botonJugar.alto){
-            nivel=1;
-            aplicarPersonajeSeleccionado();
-        }else if(x>botonPersonaje.x & //BOTON PERSONAJE
-        x<botonPersonaje.x+botonPersonaje.ancho & 
-        y>botonPersonaje.y & 
-        y<botonPersonaje.y+botonPersonaje.alto){
-            nivel=2;
+            nivel=1; // Ir a selección de personaje
         }else if(x>botonInstrucciones.x & //BOTON INSTRUCCIONES
         x<botonInstrucciones.x+botonInstrucciones.ancho &
         y>botonInstrucciones.y &
         y<botonInstrucciones.y+botonInstrucciones.alto){
             nivel=3;
+        }else if(x>botonRanking.x & //BOTON RANKING
+        x<botonRanking.x+botonRanking.ancho &
+        y>botonRanking.y &
+        y<botonRanking.y+botonRanking.alto){
+            nivel=4;
         }
-    }else if(nivel==2){
+    }else if(nivel==1){
+        //MENU PERSONAJES
         botonAzafran1.escalado=false;
         botonAzafran2.escalado=false;
         botonAzafran3.escalado=false;
@@ -510,13 +579,26 @@ document.addEventListener("click",function(e){
             botonAzafran4.escalado = true;
         }
         
+        //BOTON COMENZAR
+        if(x>botonComenzar.x && x<botonComenzar.x+botonComenzar.ancho && 
+           y>botonComenzar.y && y<botonComenzar.y+botonComenzar.alto){
+            nivel=2; // Comenzar juego con personaje seleccionado
+            aplicarPersonajeSeleccionado();
+        }
+        
         //BOTON VOLVER
         if(x>botonMenu.x && x<botonMenu.x+botonMenu.ancho && 
         y>botonMenu.y && y<botonMenu.y+botonMenu.alto){
             nivel=0;
         }
+    }else if(nivel==4){
+        //RANKING
+        if(x>botonMenu.x && x<botonMenu.x+botonMenu.ancho && 
+        y>botonMenu.y && y<botonMenu.y+botonMenu.alto){
+            nivel=0;
+        }
     }else if(nivel==3){
-        //BOTON VOLVER
+        //INSTRUCCIONES
         if(x>botonMenu.x && x<botonMenu.x+botonMenu.ancho && 
         y>botonMenu.y && y<botonMenu.y+botonMenu.alto){
             nivel=0;
@@ -536,6 +618,32 @@ document.addEventListener("click",function(e){
         }
     }
 });
+
+document.addEventListener("mousemove",function(e){
+    let rect=canvas.getBoundingClientRect();
+    let x=e.clientX-rect.left;
+    let y=e.clientY-rect.top;
+    if(nivel==0){
+        if(x>botonJugar.x & //BOTON JUGAR
+        x<botonJugar.x+botonJugar.ancho & 
+        y>botonJugar.y & 
+        y<botonJugar.y+botonJugar.alto){
+            manoMenu.x=botonJugar.x-70;
+            manoMenu.y=botonJugar.y;
+            console.log("estas en el boton jugar");
+        }else if(x>botonInstrucciones.x && x<botonInstrucciones.x+botonInstrucciones.ancho &&
+                y>botonInstrucciones.y && y<botonInstrucciones.y+botonInstrucciones.alto){
+            manoMenu.x=botonInstrucciones.x-70;
+            manoMenu.y=botonInstrucciones.y;
+        }else if(x > botonRanking.x && x < botonRanking.x + botonRanking.ancho &&
+        y > botonRanking.y && y < botonRanking.y + botonRanking.alto){
+            manoMenu.x=botonRanking.x-70;
+            manoMenu.y=botonRanking.y;
+            console.log("estas en el boton ranking");
+        }
+    }
+});
+
 
 //DIBUJA LOS TEXTOS
 function dibujarTextos(){
@@ -565,7 +673,7 @@ function redibujarTodo(){
 
 //DIBUJA LOS CORAZONES VACIOS Y LLENOS
 function dibujarVida(){
-    if(nivel==1){
+    if(nivel==2){
         for(j=0;j<=6;j++){
             ctx.drawImage(imgVidaVacia,600+(30*j),15,30,30);
         };
@@ -608,11 +716,13 @@ function aplicarPersonajeSeleccionado(){
 function inicioJuego(){
     vidas=7;
     puntos=0;
+    puntajeGuardado=false;
 
     azafranGatito.x=425;
     azafranGatito.y=307;
     azafranGatito.catnip=false;
 
+    contador=0;
     acelerar=0;
     comidaCarne.sortear();
     comidaCarne.velCaida=5;
@@ -633,3 +743,29 @@ function inicioJuego(){
     
     aplicarPersonajeSeleccionado();
 }
+
+//RANKING
+function guardarEnRanking(puntaje){
+    let ranking = JSON.parse(sessionStorage.getItem('ranking')) || [];
+    let nuevaEntrada = {
+        puntos: puntaje,
+        fecha: new Date().toLocaleString()
+    };
+    if (ranking.length >= 3) {
+    ranking = ranking.slice(-2);}
+    ranking.push(nuevaEntrada);
+    sessionStorage.setItem('ranking', JSON.stringify(ranking));
+}
+
+function mostrarRanking(){
+    let ranking = JSON.parse(sessionStorage.getItem('ranking')) || [];
+    ctx.font = "25px minecraft";
+    ctx.fillStyle = "white";
+    ctx.fillText("",300,150);
+
+    ranking.forEach((entry, index) => {
+        ctx.fillText(`${index + 1}. ${entry.puntos} pts`, 300, 150 + index * 40);
+    });
+}
+
+
